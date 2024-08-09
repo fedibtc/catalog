@@ -2,8 +2,6 @@ import { FediInjectionProvider, ToastProvider } from "@fedibtc/ui"
 import "@fedibtc/ui/dist/index.css"
 import type { Metadata } from "next"
 import { Albert_Sans } from "next/font/google"
-import Fallback from "./components/fallback"
-import { AuthProvider } from "./components/providers/auth-provider"
 import "./globals.css"
 import { fediModName } from "@/lib/constants"
 
@@ -11,7 +9,7 @@ const albertSans = Albert_Sans({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: fediModName,
-  description: "Securely share sats with your friends",
+  description: "Find and install your favorite Fedi Mods",
   icons: ["logo.png"],
 }
 
@@ -34,9 +32,7 @@ export default function RootLayout({
               bitcoin: env !== "preview",
             }}
           >
-            <AuthProvider>
-              <Fallback>{children}</Fallback>
-            </AuthProvider>
+            {children}
           </FediInjectionProvider>
         </ToastProvider>
       </body>
