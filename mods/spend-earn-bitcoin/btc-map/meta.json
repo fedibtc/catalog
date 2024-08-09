@@ -1,0 +1,7 @@
+{
+  "name": "BTC Map",
+  "id": "btc-map",
+  "url": "https://btcmap.org/map",
+  "iconUrl": "https://btcmap.org/icons/pwa/windows11/SplashScreen.scale-400.png",
+  "description": "Find places to spend bitcoin"
+}

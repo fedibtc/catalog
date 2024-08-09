@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "bun i && next dev",
-    "build": "bun db:migrate && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --ignore-path .gitignore --write \"**/*.{js,ts,tsx}\"",
@@ -12,11 +12,16 @@
   },
   "dependencies": {
     "@fedibtc/tailwind-theme": "1.0.3",
-    "@fedibtc/ui": "1.2.1",
+    "@fedibtc/ui": "1.2.2",
+    "@radix-ui/react-tabs": "^1.1.0",
+    "@types/sanitize-html": "^2.11.0",
+    "marked": "^14.0.0",
     "next": "^14.1.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-qr-code": "^2.0.15",
     "react-tailwind-variants": "^1.0.2",
+    "sanitize-html": "^2.13.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

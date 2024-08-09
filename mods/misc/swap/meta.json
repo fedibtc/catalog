@@ -1,0 +1,7 @@
+{
+  "name": "Swap",
+  "id": "swap",
+  "url": "https://fedi-swap.vercel.app",
+  "iconUrl": "https://fedi-swap.vercel.app/logo.png",
+  "description": "Swaps BTC to Lightning or other cryptocurrencies"
+}

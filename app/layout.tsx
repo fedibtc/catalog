@@ -3,7 +3,8 @@ import "@fedibtc/ui/dist/index.css"
 import type { Metadata } from "next"
 import { Albert_Sans } from "next/font/google"
 import "./globals.css"
-import { fediModName } from "@/lib/constants"
+import { fediModName } from "./lib/constants"
+import { ViewportProvider } from "./components/viewport-provider"
 
 const albertSans = Albert_Sans({ subsets: ["latin"] })
 
@@ -32,7 +33,7 @@ export default function RootLayout({
               bitcoin: env !== "preview",
             }}
           >
-            {children}
+            <ViewportProvider>{children}</ViewportProvider>
           </FediInjectionProvider>
         </ToastProvider>
       </body>
