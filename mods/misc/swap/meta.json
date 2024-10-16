@@ -3,5 +3,5 @@
   "id": "swap",
   "url": "https://fedi-swap.vercel.app",
   "iconUrl": "https://fedi-swap.vercel.app/logo.png",
-  "description": "Swaps BTC to Lightning or other cryptocurrencies"
+  "description": "Swap BTC, ETH, USDC, USDT via Lightning Network."
 }
