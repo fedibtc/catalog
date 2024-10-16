@@ -2,6 +2,6 @@
   "name": "BTC Map",
   "id": "btc-map",
   "url": "https://btcmap.org/map",
-  "iconUrl": "https://btcmap.org/icons/pwa/windows11/SplashScreen.scale-400.png",
+  "iconUrl": "https://btcmap.org/images/logo.svg",
   "description": "Locate merchants in your area that accept payment in bitcoin."
 }
