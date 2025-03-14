@@ -2,6 +2,6 @@
   "name": "Bitrefill",
   "id": "bitrefill",
   "url": "https://embed.bitrefill.com/?paymentMethod=lightning&ref=bezsoYNf&utm_source=fedi",
-  "iconUrl": "https://embed.bitrefill.com/android-chrome-512x512.png",
+  "iconUrl": "https://www.bitrefill.com/android-chrome-512x512.png",
   "description": "Purchase gift cards, mobile top-ups, and eSIMs using bitcoin"
 }
