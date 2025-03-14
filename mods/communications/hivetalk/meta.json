@@ -2,6 +2,6 @@
   "name": "Hivetalk",
   "id": "hivetalk",
   "url": "https://hivetalk.org/active",
-  "iconUrl": "https://hivetalk.org/images/logo200x200.png",
+  "iconUrl": "/Hivetalk.png",
   "description": "Video messaging, screen sharing and more"
 }
