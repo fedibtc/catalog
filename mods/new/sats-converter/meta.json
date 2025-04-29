@@ -1,0 +1,7 @@
+{
+  "name": "Sats Converter",
+  "id": "sats-converter",
+  "url": "https://satsconverter.io",
+  "iconUrl": "/satsconverter.png",
+  "description": "Convert sats to other currencies"
+}

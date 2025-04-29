@@ -38,5 +38,7 @@ export default async function Index() {
     })
     .filter(Boolean) as Array<GroupContent>
 
+  groups.sort((a, b) => a.meta.order - b.meta.order)
+
   return <PageContent groups={groups} />
 }
