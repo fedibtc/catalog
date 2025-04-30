@@ -45,9 +45,14 @@ export default function PageContent({
 
       {filteredGroups.map((group, i) => (
         <Flex key={i} col gap={4} p={4} width="full" className="max-w-[1200px]">
-          <Text variant="h2" weight="medium">
-            {group.meta.title}
-          </Text>
+          <Flex align="center" gap={2}>
+            {group.meta.title === "New" && (
+              <div className="rounded-full p-1.5 bg-red-500" />
+            )}
+            <Text variant="h2" weight="medium">
+              {group.meta.title}
+            </Text>
+          </Flex>
           <Flex row gap={2} wrap key={i}>
             {group.mods.map((mod, j) => (
               <CatalogItem key={j} content={mod} query={search} />
