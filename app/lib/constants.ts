@@ -1,1 +1,1 @@
-export const fediModName = "Fedi Mods Catalog"
+export const fediModName = "Fedi Mini Apps Catalog"
