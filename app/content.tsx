@@ -34,7 +34,7 @@ export default function PageContent({
     <Flex col className="w-full items-center" gap={8}>
       <Flex col gap={4} center p={4} width="full" className="max-w-[480px]">
         <Text variant="h1" weight="medium">
-          Fedi Mods Catalog
+          Fedi Mini Apps Catalog
         </Text>
         <Input
           value={search}

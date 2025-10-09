@@ -1,6 +1,6 @@
-# Fedi Mods Catalog
+# Fedi Mini Apps Catalog
 
-Catalog of webLn and Nostr sites that works well with Fedi as Fedi Mods
+Catalog of webLn and Nostr sites that works well with Fedi as Fedi Mini Apps
 
 # Contributing
 
