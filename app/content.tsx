@@ -55,7 +55,13 @@ export default function PageContent({
 
   const installFediMod = async (mod: Mod) => {
     if (fediApiAvailable) {
-      await window.fediInternal?.installFediMod?.(mod)
+      await window.fediInternal?.installFediMod?.({
+        id: mod.id,
+        title: mod.name,
+        url: mod.url,
+        iconUrl: mod.iconUrl,
+        description: mod.description,
+      })
       getInstalledMods()
     }
   }
