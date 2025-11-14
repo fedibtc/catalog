@@ -1,8 +1,8 @@
 "use client"
 
-import { Text, Input, useFediInjection, useToast } from "@fedibtc/ui"
+import { Text, Input, useToast } from "@fedibtc/ui"
 import Flex from "./components/flex"
-import CatalogItem, { InstallFediModFn } from "./components/item"
+import CatalogItem from "./components/item"
 import { GroupContent } from "./page"
 import { useEffect, useState } from "react"
 import { Mod } from "./lib/schemas"
@@ -15,7 +15,7 @@ export default function PageContent({
   const [search, setSearch] = useState("")
   const [filteredGroups, setFilteredGroups] = useState(groups)
   const [fediApiAvailable, setFediApiAvailable] = useState<boolean>(false)
-  const [installedFediMods, setInstalledFediMods] = useState<{ id: string }[]>(
+  const [installedFediMods, setInstalledFediMods] = useState<{ url: string }[]>(
     [],
   )
   const toast = useToast()
@@ -69,7 +69,7 @@ export default function PageContent({
   const modGroupElements = filteredGroups.map((group, groupIndex) => {
     const modItemElements = group.mods.map((mod, modIndex) => {
       const isInstalled = installedFediMods.some(installedMod => {
-        return installedMod.id === mod.id
+        return installedMod.url === mod.url
       })
 
       return (
