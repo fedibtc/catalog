@@ -8,6 +8,8 @@ import { useState } from "react"
 import { styled } from "react-tailwind-variants"
 import { Mod } from "../lib/schemas"
 
+export type InstallFediModFn = () => Promise<void>
+
 const HighlightText = ({
   content,
   query,
@@ -35,11 +37,18 @@ const HighlightText = ({
 export default function CatalogItem({
   content,
   query,
+  fediApiAvailable,
+  onInstall,
+  isInstalled,
 }: {
   content: Mod
   query: string
+  fediApiAvailable: boolean
+  onInstall: (mod: Mod) => Promise<void>
+  isInstalled: boolean
 }) {
   const [isOpen, setIsOpen] = useState(false)
+  const [isInstalling, setIsInstalling] = useState<boolean>(false)
 
   const { isMobile } = useViewport()
   const toast = useToast()
@@ -48,6 +57,18 @@ export default function CatalogItem({
     navigator.clipboard.writeText(content.url).then(() => {
       toast.show("Copied to clipboard")
     })
+  }
+
+  const handleInstallClick = async () => {
+    setIsInstalling(true)
+
+    try {
+      await onInstall(content)
+    } catch (err) {
+      console.error("error installing mini-app", err)
+    } finally {
+      setIsInstalling(false)
+    }
   }
 
   const installContent = (
@@ -65,35 +86,62 @@ export default function CatalogItem({
     </Flex>
   )
 
+  const renderInstallButton = () => {
+    if (!fediApiAvailable) {
+      return null
+    }
+
+    const isDisabled = isInstalled || isInstalling
+    const buttonText = isInstalled ? "Added" : "Add"
+
+    return (
+      <Button
+        className="w-8 px-10 bg-black text-white"
+        disabled={isDisabled}
+        loading={isInstalling}
+        variant="secondary"
+        onClick={handleInstallClick}
+      >
+        {buttonText}
+      </Button>
+    )
+  }
+
   return (
     <>
       <Container
         onClick={async () => {
-          if (isMobile) {
-            await navigator.clipboard.writeText(content.url)
-            toast.show("Copied URL to clipboard")
+          if (!fediApiAvailable) {
+            if (isMobile) {
+              await navigator.clipboard.writeText(content.url)
+              toast.show("Copied URL to clipboard")
 
-            return
+              return
+            }
+
+            setIsOpen(true)
           }
-
-          setIsOpen(true)
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={content.iconUrl}
-          width={64}
-          height={64}
-          alt={content.name}
-          className="rounded-lg border border-extraLightGrey w-16 h-16"
-        />
-        <Flex col gap={2}>
-          <Text weight="medium">
-            <HighlightText content={content.name} query={query} />
-          </Text>
-          <Text variant="caption">
-            <HighlightText content={content.description} query={query} />
-          </Text>
+        <Flex grow gap={2}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={content.iconUrl}
+            width={64}
+            height={64}
+            alt={content.name}
+            className="rounded-lg border border-extraLightGrey w-16 h-16 shrink-0"
+          />
+          <Flex col gap={2} grow>
+            <Text weight="medium">
+              <HighlightText content={content.name} query={query} />
+            </Text>
+            <Text variant="caption">
+              <HighlightText content={content.description} query={query} />
+            </Text>
+          </Flex>
+
+          {renderInstallButton()}
         </Flex>
       </Container>
       {isMobile ? null : (
