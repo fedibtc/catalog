@@ -1,7 +1,7 @@
 "use client"
 
 import QRCode from "react-qr-code"
-import { Button, Dialog, Text, useToast } from "@fedibtc/ui"
+import { Button, Dialog, Text } from "@fedibtc/ui"
 import Flex from "./flex"
 import { useViewport } from "./viewport-provider"
 import { useState } from "react"
@@ -37,41 +37,49 @@ const HighlightText = ({
 export default function CatalogItem({
   content,
   query,
-  fediApiAvailable,
-  onInstall,
   isInstalled,
+  targetActionType,
+  onAction,
 }: {
   content: Mod
   query: string
-  fediApiAvailable: boolean
-  onInstall: (mod: Mod) => Promise<void>
   isInstalled: boolean
+  targetActionType: "copy" | "install"
+  onAction: () => Promise<void>
 }) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [isInstalling, setIsInstalling] = useState<boolean>(false)
-
   const { isMobile } = useViewport()
-  const toast = useToast()
+  const [isOpen, setIsOpen] = useState(false)
+  const [isPerformingAction, setIsPerformingAction] = useState<boolean>(false)
 
-  const handleCopyUrl = () => {
-    navigator.clipboard.writeText(content.url).then(() => {
-      toast.show("Copied to clipboard")
-    })
+  const handleAction = async () => {
+    setIsPerformingAction(true)
+    await onAction()
+    setIsPerformingAction(false)
   }
 
-  const handleInstallClick = async () => {
-    setIsInstalling(true)
+  const renderActionButton = () => {
+    const isDisabled = targetActionType === "install" && isInstalled
 
-    try {
-      await onInstall(content)
-    } catch (err) {
-      console.error("error installing mini-app", err)
-    } finally {
-      setIsInstalling(false)
+    let buttonText = "Copy"
+
+    if (targetActionType === "install") {
+      buttonText = isInstalled ? "Added" : "Add"
     }
+
+    return (
+      <Button
+        className="w-8 px-10 bg-black text-white"
+        disabled={isDisabled}
+        loading={isPerformingAction}
+        variant="secondary"
+        onClick={handleAction}
+      >
+        {buttonText}
+      </Button>
+    )
   }
 
-  const installContent = (
+  const modalContent = (
     <Flex col gap={2} className="min-w-[320px] shrink-0">
       <Flex
         col
@@ -82,43 +90,17 @@ export default function CatalogItem({
       >
         <QRCode value={content.url} size={256} />
       </Flex>
-      <Button onClick={handleCopyUrl}>Copy URL</Button>
+
+      {renderActionButton()}
     </Flex>
   )
-
-  const renderInstallButton = () => {
-    if (!fediApiAvailable) {
-      return null
-    }
-
-    const isDisabled = isInstalled || isInstalling
-    const buttonText = isInstalled ? "Added" : "Add"
-
-    return (
-      <Button
-        className="w-8 px-10 bg-black text-white"
-        disabled={isDisabled}
-        loading={isInstalling}
-        variant="secondary"
-        onClick={handleInstallClick}
-      >
-        {buttonText}
-      </Button>
-    )
-  }
 
   return (
     <>
       <Container
         onClick={async () => {
-          if (!fediApiAvailable) {
-            if (isMobile) {
-              await navigator.clipboard.writeText(content.url)
-              toast.show("Copied URL to clipboard")
-
-              return
-            }
-
+          if (!isMobile) {
+            await onAction()
             setIsOpen(true)
           }
         }}
@@ -141,17 +123,17 @@ export default function CatalogItem({
             </Text>
           </Flex>
 
-          {renderInstallButton()}
+          {renderActionButton()}
         </Flex>
       </Container>
-      {isMobile ? null : (
+      {!isMobile && (
         <Dialog
           open={isOpen}
           onOpenChange={setIsOpen}
           title={content.name}
           description={content.description}
         >
-          {installContent}
+          {modalContent}
         </Dialog>
       )}
     </>

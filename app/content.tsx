@@ -4,39 +4,53 @@ import { Text, Input, useToast } from "@fedibtc/ui"
 import Flex from "./components/flex"
 import CatalogItem from "./components/item"
 import { GroupContent } from "./page"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Mod } from "./lib/schemas"
+import { useSearchParams } from "next/navigation"
 
 export default function PageContent({
   groups,
 }: {
   groups: Array<GroupContent>
 }) {
+  const searchParams = useSearchParams()
+  const action = searchParams.get("action") || "install"
+  const toast = useToast()
+
   const [search, setSearch] = useState("")
   const [filteredGroups, setFilteredGroups] = useState(groups)
-  const [fediApiAvailable, setFediApiAvailable] = useState<boolean>(false)
+
+  const [injectionsApi, setInjectionsApi] = useState<
+    typeof window.fediInternal | undefined
+  >(undefined)
   const [installedFediMods, setInstalledFediMods] = useState<{ url: string }[]>(
     [],
   )
-  const toast = useToast()
 
   useEffect(() => {
-    setFediApiAvailable(typeof window?.fediInternal !== undefined)
-  }, [])
-
-  const getInstalledMods = async () => {
-    const installedMods = await window.fediInternal?.getInstalledFediMods?.()
-
-    if (installedMods) {
-      setInstalledFediMods(installedMods)
+    if (injectionsApi === undefined && window?.fediInternal !== undefined) {
+      setInjectionsApi(window.fediInternal)
     }
-  }
+  }, [injectionsApi])
+
+  const updateInstalledMods = useCallback(
+    () => async () => {
+      if (
+        injectionsApi !== undefined &&
+        "getInstalledMiniApps" in injectionsApi
+      ) {
+        const installedMods = await injectionsApi.getInstalledMiniApps()
+        setInstalledFediMods(installedMods)
+      }
+    },
+    [injectionsApi],
+  )
 
   useEffect(() => {
-    if (fediApiAvailable) {
-      getInstalledMods()
+    if (injectionsApi !== undefined) {
+      updateInstalledMods()
     }
-  }, [fediApiAvailable])
+  }, [injectionsApi, updateInstalledMods])
 
   useEffect(() => {
     const condition = (mod: Mod) =>
@@ -53,18 +67,14 @@ export default function PageContent({
     )
   }, [search, groups])
 
-  const installFediMod = async (mod: Mod) => {
-    if (fediApiAvailable) {
-      await window.fediInternal?.installFediMod?.({
-        id: mod.id,
-        title: mod.name,
-        url: mod.url,
-        iconUrl: mod.iconUrl,
-        description: mod.description,
-      })
-      getInstalledMods()
-    }
+  const handleCopyUrl = async (mod: Mod) => {
+    return navigator.clipboard.writeText(mod.url).then(() => {
+      toast.show("Copied to clipboard")
+    })
   }
+
+  const canInstall =
+    injectionsApi !== undefined && "installMiniApp" in injectionsApi
 
   const modGroupElements = filteredGroups.map((group, groupIndex) => {
     const modItemElements = group.mods.map((mod, modIndex) => {
@@ -72,14 +82,32 @@ export default function PageContent({
         return installedMod.url === mod.url
       })
 
+      const handleAction = async () => {
+        if (canInstall && action === "install") {
+          await injectionsApi.installMiniApp({
+            id: mod.id,
+            title: mod.name,
+            url: mod.url,
+            iconUrl: mod.iconUrl,
+            description: mod.description,
+          })
+
+          await updateInstalledMods()
+        } else {
+          await handleCopyUrl(mod)
+        }
+      }
+
       return (
         <CatalogItem
           key={modIndex}
           content={mod}
           query={search}
-          fediApiAvailable={fediApiAvailable}
-          onInstall={installFediMod}
+          onAction={handleAction}
           isInstalled={isInstalled}
+          targetActionType={
+            canInstall && action === "install" ? "install" : "copy"
+          }
         />
       )
     })
