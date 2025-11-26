@@ -15,7 +15,7 @@ export default function PageContent({
   const [search, setSearch] = useState("")
   const [filteredGroups, setFilteredGroups] = useState(groups)
   const [fediApiAvailable, setFediApiAvailable] = useState<boolean>(false)
-  const [installedFediMods, setInstalledFediMods] = useState<{ id: string }[]>(
+  const [installedMiniApps, setInstalledMiniApps] = useState<{ url: string }[]>(
     [],
   )
   const toast = useToast()
@@ -25,10 +25,10 @@ export default function PageContent({
   }, [])
 
   const getInstalledMods = async () => {
-    const installedMods = await window.fediInternal?.getInstalledFediMods?.()
+    const installedMods = await window.fediInternal?.getInstalledMiniApps?.()
 
     if (installedMods) {
-      setInstalledFediMods(installedMods)
+      setInstalledMiniApps(installedMods)
     }
   }
 
@@ -53,13 +53,13 @@ export default function PageContent({
     )
   }, [search, groups])
 
-  const installFediMod = async (mod: Mod) => {
+  const installMiniApp = async (mod: Mod) => {
     if (fediApiAvailable) {
-      await window.fediInternal?.installFediMod?.({
+      await window.fediInternal?.installMiniApp?.({
         id: mod.id,
         title: mod.name,
         url: mod.url,
-        iconUrl: mod.iconUrl,
+        imageUrl: mod.iconUrl,
         description: mod.description,
       })
       getInstalledMods()
@@ -68,8 +68,8 @@ export default function PageContent({
 
   const modGroupElements = filteredGroups.map((group, groupIndex) => {
     const modItemElements = group.mods.map((mod, modIndex) => {
-      const isInstalled = installedFediMods.some(installedMod => {
-        return installedMod.id === mod.id
+      const isInstalled = installedMiniApps.some(installedMiniApp => {
+        return installedMiniApp.url === mod.url
       })
 
       return (
@@ -78,7 +78,7 @@ export default function PageContent({
           content={mod}
           query={search}
           fediApiAvailable={fediApiAvailable}
-          onInstall={installFediMod}
+          onInstall={installMiniApp}
           isInstalled={isInstalled}
         />
       )
