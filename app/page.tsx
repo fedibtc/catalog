@@ -2,6 +2,7 @@ import path from "path"
 import { Mod, ModGroup, groupSchema } from "./lib/schemas"
 import { readFileSync, readdirSync } from "fs"
 import PageContent from "./content"
+import { Suspense } from "react"
 
 export interface GroupContent {
   meta: ModGroup
@@ -40,5 +41,9 @@ export default async function Index() {
 
   groups.sort((a, b) => a.meta.order - b.meta.order)
 
-  return <PageContent groups={groups} />
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PageContent groups={groups} />
+    </Suspense>
+  )
 }

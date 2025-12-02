@@ -15,47 +15,39 @@ export default function PageContent({
 }) {
   const searchParams = useSearchParams()
   const action = searchParams.get("action") || "install"
+  const [fediApiAvailable, setFediApiAvailable] = useState<boolean>(false)
   const toast = useToast()
 
   const [search, setSearch] = useState("")
   const [filteredGroups, setFilteredGroups] = useState(groups)
 
-  const [injectionsApi, setInjectionsApi] = useState<
-    typeof window.fediInternal | undefined
-  >(undefined)
-  const [installedFediMods, setInstalledFediMods] = useState<{ url: string }[]>(
+  const [installedMiniApps, setInstalledMiniApps] = useState<{ url: string }[]>(
     [],
   )
 
   useEffect(() => {
-    if (injectionsApi === undefined && window?.fediInternal !== undefined) {
-      setInjectionsApi(window.fediInternal)
+    if (window.fediInternal?.version === 2) {
+      setFediApiAvailable(true)
     }
-  }, [injectionsApi])
+  }, [])
 
-  const updateInstalledMods = useCallback(
-    () => async () => {
-      if (
-        injectionsApi !== undefined &&
-        "getInstalledMiniApps" in injectionsApi
-      ) {
-        const installedMods = await injectionsApi.getInstalledMiniApps()
-        setInstalledFediMods(installedMods)
-      }
-    },
-    [injectionsApi],
-  )
+  const updateInstalledMiniapps = useCallback(async () => {
+    if (window.fediInternal?.version === 2) {
+      const installedMiniapps = await window.fediInternal.getInstalledMiniApps()
+      setInstalledMiniApps(installedMiniapps)
+    }
+  }, [])
 
   useEffect(() => {
-    if (injectionsApi !== undefined) {
-      updateInstalledMods()
+    if (fediApiAvailable) {
+      updateInstalledMiniapps()
     }
-  }, [injectionsApi, updateInstalledMods])
+  }, [fediApiAvailable, updateInstalledMiniapps])
 
   useEffect(() => {
-    const condition = (mod: Mod) =>
-      new RegExp(search, "gi").test(mod.name) ||
-      new RegExp(search, "gi").test(mod.description)
+    const condition = (miniApp: Mod) =>
+      new RegExp(search, "gi").test(miniApp.name) ||
+      new RegExp(search, "gi").test(miniApp.description)
 
     setFilteredGroups(
       groups
@@ -67,41 +59,44 @@ export default function PageContent({
     )
   }, [search, groups])
 
-  const handleCopyUrl = async (mod: Mod) => {
-    return navigator.clipboard.writeText(mod.url).then(() => {
+  const handleCopyUrl = async (miniApp: Mod) => {
+    return navigator.clipboard.writeText(miniApp.url).then(() => {
       toast.show("Copied to clipboard")
     })
   }
 
-  const canInstall =
-    injectionsApi !== undefined && "installMiniApp" in injectionsApi
+  const canInstall = window.fediInternal?.version === 2
 
-  const modGroupElements = filteredGroups.map((group, groupIndex) => {
-    const modItemElements = group.mods.map((mod, modIndex) => {
-      const isInstalled = installedFediMods.some(installedMod => {
-        return installedMod.url === mod.url
+  const miniAppGroupElements = filteredGroups.map((group, groupIndex) => {
+    const miniAppItemElements = group.mods.map((miniApp, index) => {
+      const isInstalled = installedMiniApps.some(installedMiniApp => {
+        return installedMiniApp.url === miniApp.url
       })
 
       const handleAction = async () => {
-        if (canInstall && action === "install") {
-          await injectionsApi.installMiniApp({
-            id: mod.id,
-            title: mod.name,
-            url: mod.url,
-            iconUrl: mod.iconUrl,
-            description: mod.description,
+        if (
+          canInstall &&
+          action === "install" &&
+          window.fediInternal?.version === 2
+        ) {
+          await window.fediInternal.installMiniApp({
+            id: miniApp.id,
+            title: miniApp.name,
+            url: miniApp.url,
+            imageUrl: miniApp.iconUrl,
+            description: miniApp.description,
           })
 
-          await updateInstalledMods()
+          await updateInstalledMiniapps()
         } else {
-          await handleCopyUrl(mod)
+          await handleCopyUrl(miniApp)
         }
       }
 
       return (
         <CatalogItem
-          key={modIndex}
-          content={mod}
+          key={index}
+          content={miniApp}
           query={search}
           onAction={handleAction}
           isInstalled={isInstalled}
@@ -130,7 +125,7 @@ export default function PageContent({
           </Text>
         </Flex>
         <Flex row gap={2} wrap key={groupIndex}>
-          {modItemElements}
+          {miniAppItemElements}
         </Flex>
       </Flex>
     )
@@ -149,7 +144,7 @@ export default function PageContent({
         />
       </Flex>
 
-      {modGroupElements}
+      {miniAppGroupElements}
     </Flex>
   )
 }

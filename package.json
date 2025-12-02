@@ -8,8 +8,12 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --ignore-path .gitignore --write \"**/*.{js,ts,tsx}\"",
-    "format:check": "prettier --ignore-path .gitignore --check \"**/*.{js,ts,tsx}\""
+    "format:check": "prettier --ignore-path .gitignore --check \"**/*.{js,ts,tsx}\"",
+    "postinstall": "patch-package"
   },
+  "trustedDependencies": [
+    "patch-package"
+  ],
   "dependencies": {
     "@fedibtc/tailwind-theme": "^1.0.5",
     "@fedibtc/ui": "^1.2.5",
@@ -30,6 +34,7 @@
     "autoprefixer": "^10",
     "eslint": "^8",
     "eslint-config-next": "13.5.5",
+    "patch-package": "^8.0.1",
     "postcss": "^8",
     "prettier": "^3.0.3",
     "tailwindcss": "^3",
