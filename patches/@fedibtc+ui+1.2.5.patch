@@ -1,0 +1,12 @@
+diff --git a/node_modules/@fedibtc/ui/dist/index.d.ts b/node_modules/@fedibtc/ui/dist/index.d.ts
+index 04cce92..31acc04 100644
+--- a/node_modules/@fedibtc/ui/dist/index.d.ts
++++ b/node_modules/@fedibtc/ui/dist/index.d.ts
+@@ -586,7 +586,6 @@ interface SignMessageResponse {
+ 
+ declare global {
+     interface Window {
+-        fediInternal?: InjectionFediAPIProvider;
+         nostr?: InjectionNostrProvider;
+         webln?: InjectionWebLNProvider;
+     }

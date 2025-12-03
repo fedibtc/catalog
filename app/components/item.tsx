@@ -1,12 +1,14 @@
 "use client"
 
 import QRCode from "react-qr-code"
-import { Button, Dialog, Text, useToast } from "@fedibtc/ui"
+import { Button, Dialog, Text } from "@fedibtc/ui"
 import Flex from "./flex"
 import { useViewport } from "./viewport-provider"
 import { useState } from "react"
 import { styled } from "react-tailwind-variants"
 import { Mod } from "../lib/schemas"
+
+export type InstallFediModFn = () => Promise<void>
 
 const HighlightText = ({
   content,
@@ -35,22 +37,49 @@ const HighlightText = ({
 export default function CatalogItem({
   content,
   query,
+  isInstalled,
+  targetActionType,
+  onAction,
 }: {
   content: Mod
   query: string
+  isInstalled: boolean
+  targetActionType: "copy" | "install"
+  onAction: () => Promise<void>
 }) {
-  const [isOpen, setIsOpen] = useState(false)
-
   const { isMobile } = useViewport()
-  const toast = useToast()
+  const [isOpen, setIsOpen] = useState(false)
+  const [isPerformingAction, setIsPerformingAction] = useState<boolean>(false)
 
-  const handleCopyUrl = () => {
-    navigator.clipboard.writeText(content.url).then(() => {
-      toast.show("Copied to clipboard")
-    })
+  const handleAction = async () => {
+    setIsPerformingAction(true)
+    await onAction()
+    setIsPerformingAction(false)
   }
 
-  const installContent = (
+  const renderActionButton = () => {
+    const isDisabled = targetActionType === "install" && isInstalled
+
+    let buttonText = "Copy"
+
+    if (targetActionType === "install") {
+      buttonText = isInstalled ? "Added" : "Add"
+    }
+
+    return (
+      <Button
+        className="w-8 px-10 bg-black text-white"
+        disabled={isDisabled}
+        loading={isPerformingAction}
+        variant="secondary"
+        onClick={handleAction}
+      >
+        {buttonText}
+      </Button>
+    )
+  }
+
+  const modalContent = (
     <Flex col gap={2} className="min-w-[320px] shrink-0">
       <Flex
         col
@@ -61,7 +90,8 @@ export default function CatalogItem({
       >
         <QRCode value={content.url} size={256} />
       </Flex>
-      <Button onClick={handleCopyUrl}>Copy URL</Button>
+
+      {renderActionButton()}
     </Flex>
   )
 
@@ -69,41 +99,41 @@ export default function CatalogItem({
     <>
       <Container
         onClick={async () => {
-          if (isMobile) {
-            await navigator.clipboard.writeText(content.url)
-            toast.show("Copied URL to clipboard")
-
-            return
+          if (!isMobile) {
+            await onAction()
+            setIsOpen(true)
           }
-
-          setIsOpen(true)
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={content.iconUrl}
-          width={64}
-          height={64}
-          alt={content.name}
-          className="rounded-lg border border-extraLightGrey w-16 h-16"
-        />
-        <Flex col gap={2}>
-          <Text weight="medium">
-            <HighlightText content={content.name} query={query} />
-          </Text>
-          <Text variant="caption">
-            <HighlightText content={content.description} query={query} />
-          </Text>
+        <Flex grow gap={2}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={content.iconUrl}
+            width={64}
+            height={64}
+            alt={content.name}
+            className="rounded-lg border border-extraLightGrey w-16 h-16 shrink-0"
+          />
+          <Flex col gap={2} grow>
+            <Text weight="medium">
+              <HighlightText content={content.name} query={query} />
+            </Text>
+            <Text variant="caption">
+              <HighlightText content={content.description} query={query} />
+            </Text>
+          </Flex>
+
+          {renderActionButton()}
         </Flex>
       </Container>
-      {isMobile ? null : (
+      {!isMobile && (
         <Dialog
           open={isOpen}
           onOpenChange={setIsOpen}
           title={content.name}
           description={content.description}
         >
-          {installContent}
+          {modalContent}
         </Dialog>
       )}
     </>
