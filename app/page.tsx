@@ -1,5 +1,5 @@
 import path from "path"
-import { Mod, ModGroup, groupSchema } from "./lib/schemas"
+import { Mod, ModGroup, groupSchema, modSchema } from "./lib/schemas"
 import { readFileSync, readdirSync } from "fs"
 import PageContent from "./content"
 import { Suspense } from "react"
@@ -23,7 +23,8 @@ export default async function Index() {
               readFileSync(path.join("mods", dir, mod, "meta.json"), "utf8"),
             )
 
-            return meta
+            return modSchema.parse(meta)
+            // return meta
           } catch (e) {
             return null
           }
