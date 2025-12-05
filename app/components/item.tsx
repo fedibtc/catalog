@@ -1,7 +1,7 @@
 "use client"
 
 import QRCode from "react-qr-code"
-import { Button, Dialog, Text } from "@fedibtc/ui"
+import { Button, Dialog, Icon, Text } from "@fedibtc/ui"
 import Flex from "./flex"
 import { useViewport } from "./viewport-provider"
 import { useState } from "react"
@@ -58,25 +58,31 @@ export default function CatalogItem({
   }
 
   const renderActionButton = () => {
-    const isDisabled = targetActionType === "install" && isInstalled
+    if (targetActionType === 'install') {
+      const installButtonText = isInstalled ? "Added" : "Add"
 
-    let buttonText = "Copy"
-
-    if (targetActionType === "install") {
-      buttonText = isInstalled ? "Added" : "Add"
+      return (
+        <Button
+          className="w-8 px-10 bg-black text-white"
+          disabled={isInstalled}
+          loading={isPerformingAction}
+          variant="secondary"
+          onClick={handleAction}
+        >
+          {installButtonText}
+        </Button>
+      )
+    } else {
+      return (
+        <Button
+          className="rounded-full p-3"
+          variant="secondary"
+          onClick={handleAction}
+        >
+          <Icon icon="IconCopy" className="h-6 max-h-6 w-6 max-w-6" />
+        </Button>
+      )
     }
-
-    return (
-      <Button
-        className="w-8 px-10 bg-black text-white"
-        disabled={isDisabled}
-        loading={isPerformingAction}
-        variant="secondary"
-        onClick={handleAction}
-      >
-        {buttonText}
-      </Button>
-    )
   }
 
   const modalContent = (
