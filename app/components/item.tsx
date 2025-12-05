@@ -109,17 +109,17 @@ export default function CatalogItem({
               <Icon icon="IconCopy" className="h-4 max-h-4 w-4 max-w-4" />
             </Button>
 
-            {targetActionType === 'install' &&
-                <Button
-                  className="bg-black text-white h-8 p-4"
-                  disabled={isInstalled}
-                  loading={isPerformingAction}
-                  variant="secondary"
-                  onClick={handleAction}
-                >
-                  {isInstalled ? 'Added' : 'Add'}
-                </Button>
-            }
+            {targetActionType === "install" && (
+              <Button
+                className="bg-black text-white h-8 p-4"
+                disabled={isInstalled}
+                loading={isPerformingAction}
+                variant="secondary"
+                onClick={handleAction}
+              >
+                {isInstalled ? "Added" : "Add"}
+              </Button>
+            )}
           </div>
         </Flex>
       </Container>
