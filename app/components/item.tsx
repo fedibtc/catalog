@@ -57,34 +57,6 @@ export default function CatalogItem({
     setIsPerformingAction(false)
   }
 
-  const renderActionButton = () => {
-    if (targetActionType === 'install') {
-      const installButtonText = isInstalled ? "Added" : "Add"
-
-      return (
-        <Button
-          className="w-8 px-10 bg-black text-white"
-          disabled={isInstalled}
-          loading={isPerformingAction}
-          variant="secondary"
-          onClick={handleAction}
-        >
-          {installButtonText}
-        </Button>
-      )
-    } else {
-      return (
-        <Button
-          className="rounded-full p-3"
-          variant="secondary"
-          onClick={handleAction}
-        >
-          <Icon icon="IconCopy" className="h-6 max-h-6 w-6 max-w-6" />
-        </Button>
-      )
-    }
-  }
-
   const modalContent = (
     <Flex col gap={2} className="min-w-[320px] shrink-0">
       <Flex
@@ -96,8 +68,6 @@ export default function CatalogItem({
       >
         <QRCode value={content.url} size={256} />
       </Flex>
-
-      {renderActionButton()}
     </Flex>
   )
 
@@ -110,17 +80,18 @@ export default function CatalogItem({
             setIsOpen(true)
           }
         }}
+        className="p-2"
       >
-        <Flex grow gap={2}>
+        <Flex grow align="center" gap={2}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={content.iconUrl}
             width={64}
             height={64}
             alt={content.name}
-            className="rounded-lg border border-extraLightGrey w-16 h-16 shrink-0"
+            className="rounded-lg self-start border border-extraLightGrey w-16 h-16 shrink-0"
           />
-          <Flex col gap={2} grow>
+          <Flex col gap={1} grow>
             <Text weight="medium">
               <HighlightText content={content.name} query={query} />
             </Text>
@@ -129,7 +100,27 @@ export default function CatalogItem({
             </Text>
           </Flex>
 
-          {renderActionButton()}
+          <div className="flex gap-1 items-center">
+            <Button
+              className="rounded-full h-4 w-4 p-4"
+              variant="secondary"
+              onClick={handleAction}
+            >
+              <Icon icon="IconCopy" className="h-4 max-h-4 w-4 max-w-4" />
+            </Button>
+
+            {targetActionType === 'install' &&
+                <Button
+                  className="bg-black text-white h-8 p-4"
+                  disabled={isInstalled}
+                  loading={isPerformingAction}
+                  variant="secondary"
+                  onClick={handleAction}
+                >
+                  {isInstalled ? 'Added' : 'Add'}
+                </Button>
+            }
+          </div>
         </Flex>
       </Container>
       {!isMobile && (
