@@ -39,13 +39,15 @@ export default function CatalogItem({
   query,
   isInstalled,
   targetActionType,
-  onAction,
+  onCopy,
+  onInstall,
 }: {
   content: Mod
   query: string
   isInstalled: boolean
   targetActionType: "copy" | "install"
-  onAction: () => Promise<void>
+  onCopy: (miniApp: Mod) => Promise<void>
+  onInstall: (miniApp: Mod) => Promise<void>
 }) {
   const { isMobile } = useViewport()
   const [isOpen, setIsOpen] = useState(false)
@@ -53,7 +55,13 @@ export default function CatalogItem({
 
   const handleAction = async () => {
     setIsPerformingAction(true)
-    await onAction()
+
+    if (targetActionType === 'copy') {
+      await onCopy(content)
+    } else if (targetActionType === 'install') {
+      await onInstall(content)
+    }
+
     setIsPerformingAction(false)
   }
 
@@ -76,7 +84,7 @@ export default function CatalogItem({
       <Container
         onClick={async () => {
           if (!isMobile) {
-            await onAction()
+            await handleAction()
             setIsOpen(true)
           }
         }}
@@ -137,6 +145,6 @@ export default function CatalogItem({
   )
 }
 
-const Container = styled("button", {
+const Container = styled("div", {
   base: "flex gap-4 p-4 rounded-lg border border-extraLightGrey basis-0 grow min-w-[320px] cursor-pointer hover:bg-extraLightGrey/25 hover:border-lightGrey border-solid text-left transition-colors",
 })

@@ -23,7 +23,10 @@ export default async function Index() {
               readFileSync(path.join("mods", dir, mod, "meta.json"), "utf8"),
             )
 
-            return modSchema.parse(meta)
+            return modSchema.parse({
+              ...meta,
+              categoryCode: dir,
+            })
             // return meta
           } catch (e) {
             return null
