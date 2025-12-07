@@ -56,9 +56,9 @@ export default function CatalogItem({
   const handleAction = async () => {
     setIsPerformingAction(true)
 
-    if (targetActionType === 'copy') {
+    if (targetActionType === "copy") {
       await onCopy(content)
-    } else if (targetActionType === 'install') {
+    } else if (targetActionType === "install") {
       await onInstall(content)
     }
 

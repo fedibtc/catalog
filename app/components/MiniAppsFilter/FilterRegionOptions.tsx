@@ -1,4 +1,8 @@
-import { RegionCode, regionCodes, regionsByRegionCode } from "@/app/lib/countries"
+import {
+  RegionCode,
+  regionCodes,
+  regionsByRegionCode,
+} from "@/app/lib/countries"
 import { Button, Text } from "@fedibtc/ui"
 import Flex from "../flex"
 
@@ -8,10 +12,7 @@ type FilterRegionOptionsProps = {
 }
 
 const FilterRegionOptions = (props: FilterRegionOptionsProps) => {
-  const {
-    selectedRegionCode,
-    onRegionCodeSelectedChange,
-  } = props
+  const { selectedRegionCode, onRegionCodeSelectedChange } = props
 
   const handleRegionCodeClick = (regionCode: RegionCode) => {
     if (regionCode === selectedRegionCode) {
@@ -23,9 +24,9 @@ const FilterRegionOptions = (props: FilterRegionOptionsProps) => {
 
   const sortedRegionCodes = [...regionCodes].sort((a, b) => {
     // global should be first
-    if (a === 'GLOBAL') {
+    if (a === "GLOBAL") {
       return -1
-    } else if (b === 'GLOBAL') {
+    } else if (b === "GLOBAL") {
       return 1
     }
 
@@ -34,7 +35,7 @@ const FilterRegionOptions = (props: FilterRegionOptionsProps) => {
     )
   })
 
-  const regionOptions = sortedRegionCodes.map((regionCode) => {
+  const regionOptions = sortedRegionCodes.map(regionCode => {
     const isSelected = regionCode === selectedRegionCode
     const regionName = regionsByRegionCode[regionCode].displayName
 
@@ -43,12 +44,10 @@ const FilterRegionOptions = (props: FilterRegionOptionsProps) => {
         key={regionCode}
         variant="outline"
         size="sm"
-        className={`${isSelected ? 'bg-gray-500 text-white' : 'bg-gray-100'}`}
+        className={`${isSelected ? "bg-gray-500 text-white" : "bg-gray-100"}`}
         onClick={() => handleRegionCodeClick(regionCode)}
       >
-        <Text className="text-nowrap font-bold">
-          {regionName}
-        </Text>
+        <Text className="text-nowrap font-bold">{regionName}</Text>
       </Button>
     )
   })

@@ -1,4 +1,8 @@
-const pluralize = (count: number, singular: string, plural: string = singular + 's'): string => {
+const pluralize = (
+  count: number,
+  singular: string,
+  plural: string = singular + "s",
+): string => {
   if (count === 1) {
     return singular
   } else {

@@ -1,9 +1,6 @@
 "use client"
 
-import {
-  Text,
-  useToast,
-} from "@fedibtc/ui"
+import { Text, useToast } from "@fedibtc/ui"
 import { useCallback, useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 
@@ -27,10 +24,12 @@ export default function PageContent({
   const [installedMiniApps, setInstalledMiniApps] = useState<{ url: string }[]>(
     [],
   )
-  const [filterSearch, setFilterSearch] = useState<string>('')
+  const [filterSearch, setFilterSearch] = useState<string>("")
   const [filteredMiniApps, setFilteredMiniApps] = useState<Mod[] | null>(null)
 
-  const canInstall = window?.fediInternal?.version === 2 && 'installMiniApp' in window.fediInternal
+  const canInstall =
+    window?.fediInternal?.version === 2 &&
+    "installMiniApp" in window.fediInternal
 
   const refreshInstalledMiniApps = useCallback(async () => {
     if (window.fediInternal?.version === 2) {
@@ -41,7 +40,7 @@ export default function PageContent({
 
   const copyMiniAppUrl = (miniApp: Mod) => {
     return navigator.clipboard.writeText(miniApp.url).then(() => {
-      toast.show('Copied to clipboard')
+      toast.show("Copied to clipboard")
     })
   }
 
@@ -63,7 +62,7 @@ export default function PageContent({
     const updated: { [id: string]: Mod } = {
       ...acc,
     }
-    
+
     for (const mod of group.mods) {
       updated[mod.id] = mod
     }
@@ -84,13 +83,12 @@ export default function PageContent({
   }, [fediApiAvailable, refreshInstalledMiniApps])
 
   const renderMiniApp = (miniApp: Mod) => {
-    const isInstalled = installedMiniApps.some((installedMiniApp) => {
+    const isInstalled = installedMiniApps.some(installedMiniApp => {
       return installedMiniApp.url === miniApp.url
     })
 
-    const targetActionType = canInstall && action === 'install'
-      ? 'install'
-      : 'copy'
+    const targetActionType =
+      canInstall && action === "install" ? "install" : "copy"
 
     return (
       <CatalogItem
@@ -106,7 +104,7 @@ export default function PageContent({
   }
 
   const allMiniAppGroupElements = groups.map((group, groupIndex) => {
-    const miniAppElements = group.mods.map((miniApp) => {
+    const miniAppElements = group.mods.map(miniApp => {
       return renderMiniApp(miniApp)
     })
 
@@ -120,9 +118,7 @@ export default function PageContent({
         className="max-w-[1200px]"
       >
         <Flex align="center" gap={2}>
-          {group.meta.title === "New" && (
-            <div className="rounded-full p-1.5" />
-          )}
+          {group.meta.title === "New" && <div className="rounded-full p-1.5" />}
           <Text variant="h2" weight="medium">
             {group.meta.title}
           </Text>
@@ -148,12 +144,12 @@ export default function PageContent({
         />
       </Flex>
 
-      {filteredMiniApps !== null &&
+      {filteredMiniApps !== null && (
         <FilteredMiniAppsList
           miniApps={filteredMiniApps}
           renderMiniApp={renderMiniApp}
         />
-      }
+      )}
 
       {allMiniAppGroupElements}
     </Flex>
