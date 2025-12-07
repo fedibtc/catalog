@@ -248,16 +248,16 @@ export const countryCodes = [
 export type CountryCode = (typeof countryCodes)[number]
 
 export const regionCodes = [
-  'AF',
-  'AS',
-  'GLOBAL',
-  'EU',
-  'NA',
-  'AU',
-  'LA',
+  "AF",
+  "AS",
+  "GLOBAL",
+  "EU",
+  "NA",
+  "AU",
+  "LA",
 ] as const
 
-export type RegionCode = typeof regionCodes[number]
+export type RegionCode = (typeof regionCodes)[number]
 
 type RegionInfo = {
   displayName: string
@@ -274,7 +274,7 @@ export const regionsByRegionCode: Record<RegionCode, RegionInfo> = {
     displayName: "Europe",
   },
   GLOBAL: {
-    displayName: 'Global',
+    displayName: "Global",
   },
   NA: {
     displayName: "North America",
@@ -1275,6 +1275,9 @@ export const countriesByCountryCode: Record<CountryCode, CountryInfo> = {
   },
 }
 
-export const isCountryInRegion = (countryCode: CountryCode, regionCode: RegionCode): boolean => {
+export const isCountryInRegion = (
+  countryCode: CountryCode,
+  regionCode: RegionCode,
+): boolean => {
   return countriesByCountryCode[countryCode].regionCode === regionCode
 }

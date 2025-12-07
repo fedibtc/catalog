@@ -1,4 +1,9 @@
-import { countriesByCountryCode, CountryCode, countryCodes, RegionCode } from "@/app/lib/countries"
+import {
+  countriesByCountryCode,
+  CountryCode,
+  countryCodes,
+  RegionCode,
+} from "@/app/lib/countries"
 import Flex from "../flex"
 import { useState } from "react"
 import { Checkbox, Text } from "@fedibtc/ui"
@@ -9,7 +14,10 @@ type FilterCountryOptionsProps = {
   searchQuery: string
   selectedCountryCodes: Partial<Record<CountryCode, boolean>>
   selectedRegionCode: RegionCode | undefined
-  onCountryCodeSelectedChange: (countryCode: CountryCode, isSelected: boolean) => void
+  onCountryCodeSelectedChange: (
+    countryCode: CountryCode,
+    isSelected: boolean,
+  ) => void
 }
 
 const FilterCountryOptions = (props: FilterCountryOptionsProps) => {
@@ -29,16 +37,18 @@ const FilterCountryOptions = (props: FilterCountryOptionsProps) => {
     )
   })
 
-  const filteredCountryCodes = sortedCountryCodes.filter((countryCode) => {
+  const filteredCountryCodes = sortedCountryCodes.filter(countryCode => {
     const countryInfo = countriesByCountryCode[countryCode]
 
-    const matchesSelectedRegion = selectedRegionCode === undefined
-      || selectedRegionCode === 'GLOBAL' // shows all countries
-        || countryInfo.regionCode === selectedRegionCode
+    const matchesSelectedRegion =
+      selectedRegionCode === undefined ||
+      selectedRegionCode === "GLOBAL" || // shows all countries
+      countryInfo.regionCode === selectedRegionCode
 
-    const matchesSearch = searchTerm.length === 0
-      || countryCode.toLowerCase().includes(searchTerm)
-        || countryInfo.displayName.toLowerCase().includes(searchTerm)
+    const matchesSearch =
+      searchTerm.length === 0 ||
+      countryCode.toLowerCase().includes(searchTerm) ||
+      countryInfo.displayName.toLowerCase().includes(searchTerm)
 
     return matchesSelectedRegion && matchesSearch
   })
@@ -47,30 +57,26 @@ const FilterCountryOptions = (props: FilterCountryOptionsProps) => {
     ? [...filteredCountryCodes]
     : filteredCountryCodes.slice(0, REDUCED_COUNTRY_LIST_LENGTH)
 
-  const countryOptions = visibleCountryCodes
-    .map(countryCode => {
-      const isSelected = selectedCountryCodes[countryCode] === true
-      const countryName = countriesByCountryCode[countryCode].displayName
+  const countryOptions = visibleCountryCodes.map(countryCode => {
+    const isSelected = selectedCountryCodes[countryCode] === true
+    const countryName = countriesByCountryCode[countryCode].displayName
 
-      return (
-        <Flex
-          key={countryCode}
-          className="gap-4 cursor-pointer"
-          onClick={() => onCountryCodeSelectedChange(countryCode, !isSelected)}
-        >
-          <Checkbox
-            checked={isSelected}
-          />
+    return (
+      <Flex
+        key={countryCode}
+        className="gap-4 cursor-pointer"
+        onClick={() => onCountryCodeSelectedChange(countryCode, !isSelected)}
+      >
+        <Checkbox checked={isSelected} />
 
-          <Text className="text-lg">
-            {countryName}
-          </Text>
-        </Flex>
-      )
-    })
+        <Text className="text-lg">{countryName}</Text>
+      </Flex>
+    )
+  })
 
-    const canViewMoreCountries = !showingAllCountries
-      && visibleCountryCodes.length < filteredCountryCodes.length
+  const canViewMoreCountries =
+    !showingAllCountries &&
+    visibleCountryCodes.length < filteredCountryCodes.length
 
   if (countryOptions.length === 0) {
     return (
@@ -83,9 +89,14 @@ const FilterCountryOptions = (props: FilterCountryOptionsProps) => {
       <Flex col gap={4}>
         {countryOptions}
 
-        {canViewMoreCountries &&
-          <Text className="font-bold" onClick={() => setShowingAllCountries(true)}>View more</Text>
-        }
+        {canViewMoreCountries && (
+          <Text
+            className="font-bold"
+            onClick={() => setShowingAllCountries(true)}
+          >
+            View more
+          </Text>
+        )}
       </Flex>
     )
   }
