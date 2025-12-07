@@ -9,15 +9,12 @@ type DropdownProps = {
 }
 
 const Dropdown = (props: DropdownProps) => {
-  const {
-    title,
-    children,
-  } = props
+  const { title, children } = props
 
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const toggleDropdown = () => {
-    setIsOpen((prev) => {
+    setIsOpen(prev => {
       return !prev
     })
   }
@@ -28,7 +25,7 @@ const Dropdown = (props: DropdownProps) => {
         <Text className="font-bold">{title}</Text>
 
         <Icon
-          icon={`${isOpen ? 'IconChevronUp' : 'IconChevronDown'}`}
+          icon={`${isOpen ? "IconChevronUp" : "IconChevronDown"}`}
           size="sm"
         />
       </Flex>
