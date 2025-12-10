@@ -106,11 +106,11 @@ export default function PageContent({
     )
   }
 
-  const newMiniApps = Object.values(allMiniAppsById).filter((miniApp) => {
+  const newMiniApps = Object.values(allMiniAppsById).filter(miniApp => {
     return newMiniAppIds.includes(miniApp.id)
   })
 
-  const miniAppGroups = groups.map((group) => {
+  const miniAppGroups = groups.map(group => {
     return (
       <MiniAppGroup
         groupName={group.meta.title}
