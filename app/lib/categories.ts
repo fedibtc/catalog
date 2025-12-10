@@ -3,7 +3,6 @@ export const categoryCodes = [
   "cash-in-cash-out",
   "communications",
   "misc",
-  "new",
   "productivities",
   "spend-earn-bitcoin",
 ] as const
@@ -26,9 +25,6 @@ export const categoriesByCode: Record<CategoryCode, CategoryInfo> = {
   },
   misc: {
     displayName: "Misc",
-  },
-  new: {
-    displayName: "New",
   },
   productivities: {
     displayName: "Productivity",

@@ -10,11 +10,14 @@ import { Mod } from "./lib/schemas"
 import { GroupContent } from "./page"
 import FilteredMiniAppsList from "./components/FilteredMiniAppsList"
 import MiniAppsFilter from "./components/MiniAppsFilter/MiniAppsFilter"
+import MiniAppGroup from "./components/miniAppGroup"
 
 export default function PageContent({
   groups,
+  newMiniAppIds,
 }: {
   groups: Array<GroupContent>
+  newMiniAppIds: Array<string>
 }) {
   const searchParams = useSearchParams()
   const action = searchParams.get("action") || "install"
@@ -103,30 +106,17 @@ export default function PageContent({
     )
   }
 
-  const allMiniAppGroupElements = groups.map((group, groupIndex) => {
-    const miniAppElements = group.mods.map(miniApp => {
-      return renderMiniApp(miniApp)
-    })
+  const newMiniApps = Object.values(allMiniAppsById).filter((miniApp) => {
+    return newMiniAppIds.includes(miniApp.id)
+  })
 
+  const miniAppGroups = groups.map((group) => {
     return (
-      <Flex
-        key={groupIndex}
-        col
-        gap={4}
-        p={4}
-        width="full"
-        className="max-w-[1200px]"
-      >
-        <Flex align="center" gap={2}>
-          {group.meta.title === "New" && <div className="rounded-full p-1.5" />}
-          <Text variant="h2" weight="medium">
-            {group.meta.title}
-          </Text>
-        </Flex>
-        <Flex row gap={2} wrap key={groupIndex}>
-          {miniAppElements}
-        </Flex>
-      </Flex>
+      <MiniAppGroup
+        groupName={group.meta.title}
+        miniApps={group.mods}
+        renderMiniApp={renderMiniApp}
+      />
     )
   })
 
@@ -151,7 +141,13 @@ export default function PageContent({
         />
       )}
 
-      {allMiniAppGroupElements}
+      <MiniAppGroup
+        groupName="New"
+        miniApps={newMiniApps}
+        renderMiniApp={renderMiniApp}
+      />
+
+      {miniAppGroups}
     </Flex>
   )
 }

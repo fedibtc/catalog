@@ -10,6 +10,10 @@ export interface GroupContent {
 }
 
 export default async function Index() {
+  const { newModIds: newMiniAppIds }: { newModIds: string[] } = JSON.parse(
+      readFileSync("newMods.json", "utf8"),
+  )
+
   const groups = readdirSync("mods")
     .map(dir => {
       try {
@@ -47,7 +51,7 @@ export default async function Index() {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <PageContent groups={groups} />
+      <PageContent groups={groups} newMiniAppIds={newMiniAppIds} />
     </Suspense>
   )
 }

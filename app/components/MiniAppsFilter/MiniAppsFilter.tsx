@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
-import { CategoryCode } from "../../lib/categories"
-import { CountryCode, isCountryInRegion, RegionCode } from "../../lib/countries"
+import { categoriesByCode, CategoryCode } from "../../lib/categories"
+import { countriesByCountryCode, CountryCode, isCountryInRegion, RegionCode, regionsByRegionCode } from "../../lib/countries"
 import { Button, Dialog, Icon, Input, Text } from "@fedibtc/ui"
 import Flex from "../flex"
 import Dropdown from "../dropdown"
@@ -104,6 +104,39 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
   const hasModalFiltersApplied =
     hasRegionFilter || hasCountryFilter || hasCategoryFilter
 
+  const filterDescriptions = []
+  if (hasRegionFilter) {
+    filterDescriptions.push(`Region: ${regionsByRegionCode[selectedRegionCode].displayName}`)
+  }
+
+  if (hasCountryFilter) {
+    const countries = []
+
+    for (const entry of Object.entries(selectedCountryCodes)) {
+      const [countryCode, isEnabled] = entry as [CountryCode, boolean]
+      if (isEnabled) {
+        countries.push(countriesByCountryCode[countryCode].displayName)
+      }
+    }
+  
+    filterDescriptions.push(`Country: ${countries.join(', ')}`)
+  }
+
+  if (hasCategoryFilter) {
+    const categories = []
+
+    for (const entry of Object.entries(selectedCategoryCodes)) {
+      const [categoryCode, isEnabled] = entry as [CategoryCode, boolean]
+      if (isEnabled) {
+        categories.push(categoriesByCode[categoryCode].displayName)
+      }
+    }
+
+    filterDescriptions.push(`Category: ${categories.join(', ')}`)
+  }
+
+  const filterDescriptionText = filterDescriptions.join('; ')
+
   const resetModalFilters = () => {
     setCountrySearch("")
     setSelectedRegionCode(undefined)
@@ -189,6 +222,12 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
           )}
         </div>
       </Flex>
+
+      {filterDescriptionText.length > 0 &&
+        <Flex p={1}>
+          <Text className="italic">{filterDescriptionText}</Text>
+        </Flex>
+      }
 
       <Dialog
         open={isModalOpen}
