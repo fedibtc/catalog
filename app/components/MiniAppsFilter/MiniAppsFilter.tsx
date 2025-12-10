@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useState } from "react"
 import { categoriesByCode, CategoryCode } from "../../lib/categories"
-import { countriesByCountryCode, CountryCode, isCountryInRegion, RegionCode, regionsByRegionCode } from "../../lib/countries"
+import {
+  countriesByCountryCode,
+  CountryCode,
+  isCountryInRegion,
+  RegionCode,
+  regionsByRegionCode,
+} from "../../lib/countries"
 import { Button, Dialog, Icon, Input, Text } from "@fedibtc/ui"
 import Flex from "../flex"
 import Dropdown from "../dropdown"
@@ -106,7 +112,9 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
 
   const filterDescriptions = []
   if (hasRegionFilter) {
-    filterDescriptions.push(`Region: ${regionsByRegionCode[selectedRegionCode].displayName}`)
+    filterDescriptions.push(
+      `Region: ${regionsByRegionCode[selectedRegionCode].displayName}`,
+    )
   }
 
   if (hasCountryFilter) {
@@ -118,8 +126,8 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
         countries.push(countriesByCountryCode[countryCode].displayName)
       }
     }
-  
-    filterDescriptions.push(`Country: ${countries.join(', ')}`)
+
+    filterDescriptions.push(`Country: ${countries.join(", ")}`)
   }
 
   if (hasCategoryFilter) {
@@ -132,10 +140,10 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
       }
     }
 
-    filterDescriptions.push(`Category: ${categories.join(', ')}`)
+    filterDescriptions.push(`Category: ${categories.join(", ")}`)
   }
 
-  const filterDescriptionText = filterDescriptions.join('; ')
+  const filterDescriptionText = filterDescriptions.join("; ")
 
   const resetModalFilters = () => {
     setCountrySearch("")
@@ -223,11 +231,11 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
         </div>
       </Flex>
 
-      {filterDescriptionText.length > 0 &&
+      {filterDescriptionText.length > 0 && (
         <Flex p={1}>
           <Text className="italic">{filterDescriptionText}</Text>
         </Flex>
-      }
+      )}
 
       <Dialog
         open={isModalOpen}

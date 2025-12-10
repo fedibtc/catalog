@@ -9,11 +9,7 @@ type MiniAppGroupProps = {
 }
 
 const MiniAppGroup = (props: MiniAppGroupProps) => {
-  const {
-    groupName,
-    miniApps,
-    renderMiniApp,
-  } = props
+  const { groupName, miniApps, renderMiniApp } = props
 
   const sortedMiniApps = [...miniApps].sort((a, b) => {
     return a.name.localeCompare(b.name)
