@@ -11,7 +11,7 @@ export interface GroupContent {
 
 export default async function Index() {
   const { newModIds: newMiniAppIds }: { newModIds: string[] } = JSON.parse(
-      readFileSync("newMods.json", "utf8"),
+    readFileSync("newMods.json", "utf8"),
   )
 
   const groups = readdirSync("mods")
