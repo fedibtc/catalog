@@ -3,7 +3,6 @@ import { Checkbox, Text } from "@fedibtc/ui"
 import Flex from "../flex"
 
 const SORTED_CATEGORY_CODES: CategoryCode[] = [
-  "new",
   "spend-earn-bitcoin",
   "cash-in-cash-out",
   "productivities",
