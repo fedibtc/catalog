@@ -65,7 +65,7 @@ export default function PageContent({
     })
   }
 
-  const canInstall = window.fediInternal?.version === 2
+  const canInstall = fediApiAvailable
 
   const miniAppGroupElements = filteredGroups.map((group, groupIndex) => {
     const miniAppItemElements = group.mods.map((miniApp, index) => {
