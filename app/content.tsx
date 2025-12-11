@@ -48,7 +48,7 @@ export default function PageContent({
   }
 
   const installMiniApp = async (miniApp: Mod) => {
-    if (canInstall) {
+    if (canInstall && window.fediInternal?.version === 2) {
       await window.fediInternal?.installMiniApp({
         id: miniApp.id,
         title: miniApp.name,
