@@ -11,9 +11,13 @@ type FilteredMiniAppsListProps = {
 const FilteredMiniAppsList = (props: FilteredMiniAppsListProps) => {
   const { miniApps, renderMiniApp } = props
 
-  const miniAppElements = miniApps.map(miniApp => renderMiniApp(miniApp))
+  const sortedMiniApps = [...miniApps.sort((a, b) => {
+    return a.name.localeCompare(b.name)
+  })]
 
-  if (miniApps.length === 0) {
+  const miniAppElements = sortedMiniApps.map(miniApp => renderMiniApp(miniApp))
+
+  if (miniAppElements.length === 0) {
     return (
       <Flex col align="center" gap={1}>
         <Icon icon="IconBan" size="md" className="text-gray-500" />
@@ -29,7 +33,7 @@ const FilteredMiniAppsList = (props: FilteredMiniAppsListProps) => {
     return (
       <Flex col gap={4} p={4} width="full" className="max-w-[1200px]">
         <Text variant="h2" weight="medium">
-          {miniApps.length} Filtered {pluralize(miniApps.length, "Result")}
+          {miniAppElements.length} Filtered {pluralize(miniAppElements.length, "Result")}
         </Text>
 
         {miniAppElements}
