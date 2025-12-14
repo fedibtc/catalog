@@ -1,6 +1,6 @@
 "use client"
 
-import { Text, useToast } from "@fedibtc/ui"
+import { Button, Dialog, Icon, Text, useToast } from "@fedibtc/ui"
 import { useCallback, useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 
@@ -11,6 +11,10 @@ import { GroupContent } from "./page"
 import FilteredMiniAppsList from "./components/FilteredMiniAppsList"
 import MiniAppsFilter from "./components/MiniAppsFilter/MiniAppsFilter"
 import MiniAppGroup from "./components/miniAppGroup"
+import { useViewport } from "./components/viewport-provider"
+import { styled } from "react-tailwind-variants"
+import { categoriesByCode } from "./lib/categories"
+import MiniAppDetails from "./components/MiniAppDetails"
 
 export default function PageContent({
   groups,
@@ -22,6 +26,7 @@ export default function PageContent({
   const searchParams = useSearchParams()
   const action = searchParams.get("action") || "install"
   const toast = useToast()
+  const { isMobile } = useViewport()
 
   const [fediApiAvailable, setFediApiAvailable] = useState<boolean>(false)
   const [installedMiniApps, setInstalledMiniApps] = useState<{ url: string }[]>(
@@ -29,6 +34,9 @@ export default function PageContent({
   )
   const [filterSearch, setFilterSearch] = useState<string>("")
   const [filteredMiniApps, setFilteredMiniApps] = useState<Mod[] | null>(null)
+  const [moreDetailsApp, setMoreDetailsApp] = useState<Mod | undefined>(
+    undefined,
+  )
 
   const canInstall =
     window?.fediInternal?.version === 2 &&
@@ -85,23 +93,26 @@ export default function PageContent({
     }
   }, [fediApiAvailable, refreshInstalledMiniApps])
 
-  const renderMiniApp = (miniApp: Mod) => {
-    const isInstalled = installedMiniApps.some(installedMiniApp => {
+  const isMiniAppInstalled = (miniApp: Mod): boolean => {
+    return installedMiniApps.some(installedMiniApp => {
       return installedMiniApp.url === miniApp.url
     })
+  }
 
-    const targetActionType =
-      canInstall && action === "install" ? "install" : "copy"
+  const targetActionType =
+    canInstall && action === "install" ? "install" : "copy"
 
+  const renderMiniApp = (miniApp: Mod) => {
     return (
       <CatalogItem
         key={`${miniApp.id}_${miniApp.categoryCode}`} // the same mini app may be in multiple categories
         content={miniApp}
         query={filterSearch}
-        isInstalled={isInstalled}
+        isInstalled={isMiniAppInstalled(miniApp)}
         targetActionType={targetActionType}
-        onCopy={copyMiniAppUrl}
-        onInstall={installMiniApp}
+        onShowMore={() => setMoreDetailsApp(miniApp)}
+        onCopy={() => copyMiniAppUrl(miniApp)}
+        onInstall={() => installMiniApp(miniApp)}
       />
     )
   }
@@ -148,6 +159,35 @@ export default function PageContent({
       />
 
       {miniAppGroups}
+
+      {moreDetailsApp !== undefined && (
+        <Dialog
+          open={moreDetailsApp !== undefined}
+          onOpenChange={() => setMoreDetailsApp(undefined)}
+          className="p-0"
+          disableClose
+        >
+          <div
+            className={`${isMobile ? "h-full" : "h-[700px]"} overflow-scroll p-0!`}
+          >
+            <Icon
+              onClick={() => setMoreDetailsApp(undefined)}
+              icon="IconX"
+              width={24}
+              height={24}
+              className="absolute top-4 right-4 cursor-pointer"
+            />
+
+            <MiniAppDetails
+              miniApp={moreDetailsApp}
+              isInstalled={isMiniAppInstalled(moreDetailsApp)}
+              onCopy={() => copyMiniAppUrl(moreDetailsApp)}
+              onInstall={() => installMiniApp(moreDetailsApp)}
+              targetActionType={targetActionType}
+            />
+          </div>
+        </Dialog>
+      )}
     </Flex>
   )
 }

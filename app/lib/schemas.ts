@@ -15,6 +15,7 @@ export const modSchema = z.object({
   url: z.string(),
   iconUrl: z.string(),
   description: z.string(),
+  extendedDescription: z.string().optional(),
   categoryCode: z.enum(categoryCodes),
   supportedCountryCodes: z.array(z.enum(countryCodes)).optional().default([]),
   keywords: z.array(z.string()).optional().default([]),

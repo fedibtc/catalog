@@ -41,25 +41,28 @@ export default function CatalogItem({
   targetActionType,
   onCopy,
   onInstall,
+  onShowMore,
 }: {
   content: Mod
   query: string
   isInstalled: boolean
   targetActionType: "copy" | "install"
-  onCopy: (miniApp: Mod) => Promise<void>
-  onInstall: (miniApp: Mod) => Promise<void>
+  onCopy: () => Promise<void>
+  onInstall: () => Promise<void>
+  onShowMore: () => void
 }) {
   const { isMobile } = useViewport()
   const [isOpen, setIsOpen] = useState(false)
   const [isPerformingAction, setIsPerformingAction] = useState<boolean>(false)
 
-  const handleAction = async () => {
+  const handleAction = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
     setIsPerformingAction(true)
 
     if (targetActionType === "copy") {
-      await onCopy(content)
+      await onCopy()
     } else if (targetActionType === "install") {
-      await onInstall(content)
+      await onInstall()
     }
 
     setIsPerformingAction(false)
@@ -81,15 +84,7 @@ export default function CatalogItem({
 
   return (
     <>
-      <Container
-        onClick={async () => {
-          if (!isMobile) {
-            await handleAction()
-            setIsOpen(true)
-          }
-        }}
-        className="p-2"
-      >
+      <Container onClick={onShowMore} className="p-2">
         <Flex grow align="center" gap={2}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
