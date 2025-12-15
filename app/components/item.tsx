@@ -59,13 +59,15 @@ export default function CatalogItem({
     e.stopPropagation()
     setIsPerformingAction(true)
 
-    if (targetActionType === "copy") {
-      await onCopy()
-    } else if (targetActionType === "install") {
-      await onInstall()
+    try {
+      if (targetActionType === "copy") {
+        await onCopy()
+      } else if (targetActionType === "install") {
+        await onInstall()
+      }
+    } finally {
+      setIsPerformingAction(false)
     }
-
-    setIsPerformingAction(false)
   }
 
   const modalContent = (
