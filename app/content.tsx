@@ -113,6 +113,7 @@ export default function PageContent({
   const miniAppGroups = groups.map(group => {
     return (
       <MiniAppGroup
+        key={group.meta.title}
         groupName={group.meta.title}
         miniApps={group.mods}
         renderMiniApp={renderMiniApp}
