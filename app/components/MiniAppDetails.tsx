@@ -30,6 +30,7 @@ const MiniAppDetails = (props: MiniAppDetails) => {
 
   const handleInstallClick = async () => {
     setIsInstalling(true)
+
     try {
       await onInstall()
     } finally {

@@ -11,9 +11,11 @@ type FilteredMiniAppsListProps = {
 const FilteredMiniAppsList = (props: FilteredMiniAppsListProps) => {
   const { miniApps, renderMiniApp } = props
 
-  const sortedMiniApps = [...miniApps.sort((a, b) => {
-    return a.name.localeCompare(b.name)
-  })]
+  const sortedMiniApps = [
+    ...miniApps.sort((a, b) => {
+      return a.name.localeCompare(b.name)
+    }),
+  ]
 
   const miniAppElements = sortedMiniApps.map(miniApp => renderMiniApp(miniApp))
 
@@ -33,7 +35,8 @@ const FilteredMiniAppsList = (props: FilteredMiniAppsListProps) => {
     return (
       <Flex col gap={4} p={4} width="full" className="max-w-[1200px]">
         <Text variant="h2" weight="medium">
-          {miniAppElements.length} Filtered {pluralize(miniAppElements.length, "Result")}
+          {miniAppElements.length} Filtered{" "}
+          {pluralize(miniAppElements.length, "Result")}
         </Text>
 
         {miniAppElements}
