@@ -1,29 +1,85 @@
 "use client"
 
-import { Text, Input, useToast } from "@fedibtc/ui"
-import Flex from "./components/flex"
-import CatalogItem from "./components/item"
-import { GroupContent } from "./page"
+import { Button, Dialog, Icon, Text, useToast } from "@fedibtc/ui"
 import { useCallback, useEffect, useState } from "react"
-import { Mod } from "./lib/schemas"
 import { useSearchParams } from "next/navigation"
+
+import CatalogItem from "./components/item"
+import Flex from "./components/flex"
+import { Mod } from "./lib/schemas"
+import { GroupContent } from "./page"
+import FilteredMiniAppsList from "./components/FilteredMiniAppsList"
+import MiniAppsFilter from "./components/MiniAppsFilter/MiniAppsFilter"
+import MiniAppGroup from "./components/miniAppGroup"
+import { useViewport } from "./components/viewport-provider"
+import { styled } from "react-tailwind-variants"
+import { categoriesByCode } from "./lib/categories"
+import MiniAppDetails from "./components/MiniAppDetails"
 
 export default function PageContent({
   groups,
+  newMiniAppIds,
 }: {
   groups: Array<GroupContent>
+  newMiniAppIds: Array<string>
 }) {
   const searchParams = useSearchParams()
   const action = searchParams.get("action") || "install"
-  const [fediApiAvailable, setFediApiAvailable] = useState<boolean>(false)
   const toast = useToast()
+  const { isMobile } = useViewport()
 
-  const [search, setSearch] = useState("")
-  const [filteredGroups, setFilteredGroups] = useState(groups)
-
+  const [fediApiAvailable, setFediApiAvailable] = useState<boolean>(false)
   const [installedMiniApps, setInstalledMiniApps] = useState<{ url: string }[]>(
     [],
   )
+  const [filterSearch, setFilterSearch] = useState<string>("")
+  const [filteredMiniApps, setFilteredMiniApps] = useState<Mod[] | null>(null)
+  const [moreDetailsApp, setMoreDetailsApp] = useState<Mod | undefined>(
+    undefined,
+  )
+
+  const canInstall =
+    window?.fediInternal?.version === 2 &&
+    "installMiniApp" in window.fediInternal
+
+  const refreshInstalledMiniApps = useCallback(async () => {
+    if (window.fediInternal?.version === 2) {
+      const installedMiniapps = await window.fediInternal.getInstalledMiniApps()
+      setInstalledMiniApps(installedMiniapps)
+    }
+  }, [])
+
+  const copyMiniAppUrl = (miniApp: Mod) => {
+    return navigator.clipboard.writeText(miniApp.url).then(() => {
+      toast.show("Copied to clipboard")
+    })
+  }
+
+  const installMiniApp = async (miniApp: Mod) => {
+    if (canInstall && window.fediInternal?.version === 2) {
+      await window.fediInternal?.installMiniApp({
+        id: miniApp.id,
+        title: miniApp.name,
+        url: miniApp.url,
+        imageUrl: miniApp.iconUrl,
+        description: miniApp.description,
+      })
+
+      await refreshInstalledMiniApps()
+    }
+  }
+
+  const allMiniAppsById: { [id: string]: Mod } = groups.reduce((acc, group) => {
+    const updated: { [id: string]: Mod } = {
+      ...acc,
+    }
+
+    for (const mod of group.mods) {
+      updated[mod.id] = mod
+    }
+
+    return updated
+  }, {})
 
   useEffect(() => {
     if (window.fediInternal?.version === 2) {
@@ -31,120 +87,108 @@ export default function PageContent({
     }
   }, [])
 
-  const updateInstalledMiniapps = useCallback(async () => {
-    if (window.fediInternal?.version === 2) {
-      const installedMiniapps = await window.fediInternal.getInstalledMiniApps()
-      setInstalledMiniApps(installedMiniapps)
-    }
-  }, [])
-
   useEffect(() => {
     if (fediApiAvailable) {
-      updateInstalledMiniapps()
+      refreshInstalledMiniApps()
     }
-  }, [fediApiAvailable, updateInstalledMiniapps])
+  }, [fediApiAvailable, refreshInstalledMiniApps])
 
-  useEffect(() => {
-    const condition = (miniApp: Mod) =>
-      new RegExp(search, "gi").test(miniApp.name) ||
-      new RegExp(search, "gi").test(miniApp.description)
-
-    setFilteredGroups(
-      groups
-        .filter(group => group.mods.some(condition))
-        .map(group => ({
-          ...group,
-          mods: group.mods.filter(condition),
-        })),
-    )
-  }, [search, groups])
-
-  const handleCopyUrl = async (miniApp: Mod) => {
-    return navigator.clipboard.writeText(miniApp.url).then(() => {
-      toast.show("Copied to clipboard")
+  const isMiniAppInstalled = (miniApp: Mod): boolean => {
+    return installedMiniApps.some(installedMiniApp => {
+      return installedMiniApp.url === miniApp.url
     })
   }
 
-  const canInstall = fediApiAvailable
+  const targetActionType =
+    canInstall && action === "install" ? "install" : "copy"
 
-  const miniAppGroupElements = filteredGroups.map((group, groupIndex) => {
-    const miniAppItemElements = group.mods.map((miniApp, index) => {
-      const isInstalled = installedMiniApps.some(installedMiniApp => {
-        return installedMiniApp.url === miniApp.url
-      })
-
-      const handleAction = async () => {
-        if (
-          canInstall &&
-          action === "install" &&
-          window.fediInternal?.version === 2
-        ) {
-          await window.fediInternal.installMiniApp({
-            id: miniApp.id,
-            title: miniApp.name,
-            url: miniApp.url,
-            imageUrl: miniApp.iconUrl,
-            description: miniApp.description,
-          })
-
-          await updateInstalledMiniapps()
-        } else {
-          await handleCopyUrl(miniApp)
-        }
-      }
-
-      return (
-        <CatalogItem
-          key={index}
-          content={miniApp}
-          query={search}
-          onAction={handleAction}
-          isInstalled={isInstalled}
-          targetActionType={
-            canInstall && action === "install" ? "install" : "copy"
-          }
-        />
-      )
-    })
-
+  const renderMiniApp = (miniApp: Mod) => {
     return (
-      <Flex
-        key={groupIndex}
-        col
-        gap={4}
-        p={4}
-        width="full"
-        className="max-w-[1200px]"
-      >
-        <Flex align="center" gap={2}>
-          {group.meta.title === "New" && (
-            <div className="rounded-full p-1.5 bg-red-500" />
-          )}
-          <Text variant="h2" weight="medium">
-            {group.meta.title}
-          </Text>
-        </Flex>
-        <Flex row gap={2} wrap key={groupIndex}>
-          {miniAppItemElements}
-        </Flex>
-      </Flex>
+      <CatalogItem
+        key={`${miniApp.id}_${miniApp.categoryCode}`} // the same mini app may be in multiple categories
+        content={miniApp}
+        query={filterSearch}
+        isInstalled={isMiniAppInstalled(miniApp)}
+        targetActionType={targetActionType}
+        onShowMore={() => setMoreDetailsApp(miniApp)}
+        onCopy={() => copyMiniAppUrl(miniApp)}
+        onInstall={() => installMiniApp(miniApp)}
+      />
+    )
+  }
+
+  const newMiniApps = Object.values(allMiniAppsById).filter(miniApp => {
+    return newMiniAppIds.includes(miniApp.id)
+  })
+
+  const miniAppGroups = groups.map(group => {
+    return (
+      <MiniAppGroup
+        key={group.meta.title}
+        groupName={group.meta.title}
+        miniApps={group.mods}
+        renderMiniApp={renderMiniApp}
+      />
     )
   })
 
   return (
-    <Flex col className="w-full items-center" gap={8}>
-      <Flex col gap={4} center p={4} width="full" className="max-w-[480px]">
+    <Flex col className="w-full items-center">
+      <Flex col gap={2} center p={4} width="full" className="max-w-[480px]">
         <Text variant="h1" weight="medium">
           Fedi Mini Apps Catalog
         </Text>
-        <Input
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          placeholder="Search"
+
+        <MiniAppsFilter
+          allMiniApps={Object.values(allMiniAppsById)}
+          onFilteredListChange={setFilteredMiniApps}
+          onFilterSearchChange={setFilterSearch}
         />
       </Flex>
 
-      {miniAppGroupElements}
+      {filteredMiniApps !== null && (
+        <FilteredMiniAppsList
+          miniApps={filteredMiniApps}
+          renderMiniApp={renderMiniApp}
+        />
+      )}
+
+      <MiniAppGroup
+        groupName="New"
+        miniApps={newMiniApps}
+        renderMiniApp={renderMiniApp}
+      />
+
+      {miniAppGroups}
+
+      {moreDetailsApp !== undefined && (
+        <Dialog
+          open={moreDetailsApp !== undefined}
+          onOpenChange={() => setMoreDetailsApp(undefined)}
+          className="p-0"
+          disableClose
+        >
+          <div
+            className={`${isMobile ? "h-full" : "h-[700px]"} overflow-scroll p-0!`}
+          >
+            <Icon
+              onClick={() => setMoreDetailsApp(undefined)}
+              icon="IconX"
+              width={24}
+              height={24}
+              className="absolute top-4 right-4 cursor-pointer"
+            />
+
+            <MiniAppDetails
+              miniApp={moreDetailsApp}
+              isInstalled={isMiniAppInstalled(moreDetailsApp)}
+              onCopy={() => copyMiniAppUrl(moreDetailsApp)}
+              onInstall={() => installMiniApp(moreDetailsApp)}
+              targetActionType={targetActionType}
+            />
+          </div>
+        </Dialog>
+      )}
     </Flex>
   )
 }

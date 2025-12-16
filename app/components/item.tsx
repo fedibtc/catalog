@@ -39,22 +39,35 @@ export default function CatalogItem({
   query,
   isInstalled,
   targetActionType,
-  onAction,
+  onCopy,
+  onInstall,
+  onShowMore,
 }: {
   content: Mod
   query: string
   isInstalled: boolean
   targetActionType: "copy" | "install"
-  onAction: () => Promise<void>
+  onCopy: () => Promise<void>
+  onInstall: () => Promise<void>
+  onShowMore: () => void
 }) {
   const { isMobile } = useViewport()
   const [isOpen, setIsOpen] = useState(false)
   const [isPerformingAction, setIsPerformingAction] = useState<boolean>(false)
 
-  const handleAction = async () => {
+  const handleAction = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
     setIsPerformingAction(true)
-    await onAction()
-    setIsPerformingAction(false)
+
+    try {
+      if (targetActionType === "copy") {
+        await onCopy()
+      } else if (targetActionType === "install") {
+        await onInstall()
+      }
+    } finally {
+      setIsPerformingAction(false)
+    }
   }
 
   const modalContent = (
@@ -73,15 +86,7 @@ export default function CatalogItem({
 
   return (
     <>
-      <Container
-        onClick={async () => {
-          if (!isMobile) {
-            await onAction()
-            setIsOpen(true)
-          }
-        }}
-        className="p-2"
-      >
+      <Container onClick={onShowMore} className="p-2">
         <Flex grow align="center" gap={2}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -137,6 +142,6 @@ export default function CatalogItem({
   )
 }
 
-const Container = styled("button", {
+const Container = styled("div", {
   base: "flex gap-4 p-4 rounded-lg border border-extraLightGrey basis-0 grow min-w-[320px] cursor-pointer hover:bg-extraLightGrey/25 hover:border-lightGrey border-solid text-left transition-colors",
 })

@@ -1,4 +1,6 @@
 import { z } from "zod"
+import { countryCodes } from "./countries"
+import { categoryCodes } from "./categories"
 
 export const groupSchema = z.object({
   title: z.string(),
@@ -13,6 +15,10 @@ export const modSchema = z.object({
   url: z.string(),
   iconUrl: z.string(),
   description: z.string(),
+  extendedDescription: z.string().optional(),
+  categoryCode: z.enum(categoryCodes),
+  supportedCountryCodes: z.array(z.enum(countryCodes)).optional().default([]),
+  keywords: z.array(z.string()).optional().default([]),
 })
 
 export type Mod = z.infer<typeof modSchema>

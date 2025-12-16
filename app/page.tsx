@@ -1,5 +1,5 @@
 import path from "path"
-import { Mod, ModGroup, groupSchema } from "./lib/schemas"
+import { Mod, ModGroup, groupSchema, modSchema } from "./lib/schemas"
 import { readFileSync, readdirSync } from "fs"
 import PageContent from "./content"
 import { Suspense } from "react"
@@ -10,6 +10,10 @@ export interface GroupContent {
 }
 
 export default async function Index() {
+  const { newModIds: newMiniAppIds }: { newModIds: string[] } = JSON.parse(
+    readFileSync("newMods.json", "utf8"),
+  )
+
   const groups = readdirSync("mods")
     .map(dir => {
       try {
@@ -23,7 +27,11 @@ export default async function Index() {
               readFileSync(path.join("mods", dir, mod, "meta.json"), "utf8"),
             )
 
-            return meta
+            return modSchema.parse({
+              ...meta,
+              categoryCode: dir,
+            })
+            // return meta
           } catch (e) {
             return null
           }
@@ -43,7 +51,7 @@ export default async function Index() {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <PageContent groups={groups} />
+      <PageContent groups={groups} newMiniAppIds={newMiniAppIds} />
     </Suspense>
   )
 }
