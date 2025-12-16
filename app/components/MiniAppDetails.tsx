@@ -122,7 +122,7 @@ const MiniAppDetails = (props: MiniAppDetails) => {
             {miniApp.extendedDescription !== undefined && (
               <Flex col gap={2}>
                 <Text
-                  className={`${viewMoreDescription ? "" : "line-clamp-3"}`}
+                  className={`${viewMoreDescription ? "" : "line-clamp-3"} whitespace-pre-wrap`}
                 >
                   {miniApp.extendedDescription}
                 </Text>
