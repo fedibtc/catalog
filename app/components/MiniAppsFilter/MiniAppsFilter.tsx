@@ -143,7 +143,7 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
     filterDescriptions.push(`Category: ${categories.join(", ")}`)
   }
 
-  const filterDescriptionText = filterDescriptions.join("; ")
+  const filterDescriptionText = filterDescriptions.join(" · ")
 
   const resetModalFilters = () => {
     setCountrySearch("")
@@ -233,7 +233,7 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
 
       {filterDescriptionText.length > 0 && (
         <Flex p={1}>
-          <Text className="italic">{filterDescriptionText}</Text>
+          <Text className="italic" weight="medium">{filterDescriptionText}</Text>
         </Flex>
       )}
 
