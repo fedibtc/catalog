@@ -3,6 +3,7 @@
 import { Dialog, Icon, Text, useToast } from "@fedibtc/ui"
 import { useCallback, useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
+import CatalogItem from "./components/item"
 import Flex from "./components/flex"
 import { Mod } from "./lib/schemas"
 import { GroupContent } from "./page"
@@ -11,7 +12,6 @@ import MiniAppsFilter from "./components/MiniAppsFilter/MiniAppsFilter"
 import MiniAppGroup from "./components/miniAppGroup"
 import { useViewport } from "./components/viewport-provider"
 import MiniAppDetails from "./components/MiniAppDetails"
-import CatalogItem from "./components/item"
 
 export default function PageContent({
   groups,
@@ -70,8 +70,6 @@ export default function PageContent({
       })
 
       await refreshInstalledMiniApps()
-    } else {
-      copyMiniAppUrl(miniApp)
     }
   }
 
@@ -117,6 +115,7 @@ export default function PageContent({
         isInstalled={isMiniAppInstalled(miniApp)}
         targetActionType={targetActionType}
         onShowMore={() => setMoreDetailsApp(miniApp)}
+        onCopy={() => copyMiniAppUrl(miniApp)}
         onInstall={() => installMiniApp(miniApp)}
       />
     )
@@ -187,6 +186,7 @@ export default function PageContent({
             <MiniAppDetails
               miniApp={moreDetailsApp}
               isInstalled={isMiniAppInstalled(moreDetailsApp)}
+              onCopy={() => copyMiniAppUrl(moreDetailsApp)}
               onInstall={() => installMiniApp(moreDetailsApp)}
               targetActionType={targetActionType}
             />
