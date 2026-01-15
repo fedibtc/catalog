@@ -1,9 +1,8 @@
 "use client"
 
-import { Button, Dialog, Icon, Text, useToast } from "@fedibtc/ui"
+import { Dialog, Icon, Text, useToast } from "@fedibtc/ui"
 import { useCallback, useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
-
 import CatalogItem from "./components/item"
 import Flex from "./components/flex"
 import { Mod } from "./lib/schemas"
@@ -12,8 +11,6 @@ import FilteredMiniAppsList from "./components/FilteredMiniAppsList"
 import MiniAppsFilter from "./components/MiniAppsFilter/MiniAppsFilter"
 import MiniAppGroup from "./components/miniAppGroup"
 import { useViewport } from "./components/viewport-provider"
-import { styled } from "react-tailwind-variants"
-import { categoriesByCode } from "./lib/categories"
 import MiniAppDetails from "./components/MiniAppDetails"
 
 export default function PageContent({
@@ -50,9 +47,16 @@ export default function PageContent({
   }, [])
 
   const copyMiniAppUrl = (miniApp: Mod) => {
-    return navigator.clipboard.writeText(miniApp.url).then(() => {
-      toast.show("Copied to clipboard")
-    })
+    return navigator.clipboard
+      .writeText(miniApp.url)
+      .then(() => {
+        toast.show("Copied to clipboard")
+      })
+      .catch(() => {
+        toast.show(
+          "Failed to copy to clipboard, please check that your browser has the correct permissions",
+        )
+      })
   }
 
   const installMiniApp = async (miniApp: Mod) => {

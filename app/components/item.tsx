@@ -1,5 +1,3 @@
-"use client"
-
 import QRCode from "react-qr-code"
 import { Button, Dialog, Icon, Text } from "@fedibtc/ui"
 import Flex from "./flex"
