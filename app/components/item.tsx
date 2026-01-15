@@ -1,5 +1,5 @@
 import QRCode from "react-qr-code"
-import { Button, Dialog, Text } from "@fedibtc/ui"
+import { Button, Dialog, Icon, Text } from "@fedibtc/ui"
 import Flex from "./flex"
 import { useViewport } from "./viewport-provider"
 import { useState } from "react"
@@ -37,6 +37,7 @@ export default function CatalogItem({
   query,
   isInstalled,
   targetActionType,
+  onCopy,
   onInstall,
   onShowMore,
 }: {
@@ -44,6 +45,7 @@ export default function CatalogItem({
   query: string
   isInstalled: boolean
   targetActionType: "copy" | "install"
+  onCopy: () => Promise<void>
   onInstall: () => Promise<void>
   onShowMore: () => void
 }) {
@@ -56,7 +58,11 @@ export default function CatalogItem({
     setIsPerformingAction(true)
 
     try {
-      await onInstall()
+      if (targetActionType === "copy") {
+        await onCopy()
+      } else if (targetActionType === "install") {
+        await onInstall()
+      }
     } finally {
       setIsPerformingAction(false)
     }
@@ -99,18 +105,24 @@ export default function CatalogItem({
 
           <div className="flex gap-1 items-center">
             <Button
-              className="bg-black text-white h-8 p-4"
-              disabled={isInstalled}
-              loading={isPerformingAction}
+              className="rounded-full h-4 w-4 p-4"
               variant="secondary"
               onClick={handleAction}
             >
-              {targetActionType === "install"
-                ? isInstalled
-                  ? "Added"
-                  : "Add"
-                : "Copy"}
+              <Icon icon="IconCopy" className="h-4 max-h-4 w-4 max-w-4" />
             </Button>
+
+            {targetActionType === "install" && (
+              <Button
+                className="bg-black text-white h-8 p-4"
+                disabled={isInstalled}
+                loading={isPerformingAction}
+                variant="secondary"
+                onClick={handleAction}
+              >
+                {isInstalled ? "Added" : "Add"}
+              </Button>
+            )}
           </div>
         </Flex>
       </Container>
