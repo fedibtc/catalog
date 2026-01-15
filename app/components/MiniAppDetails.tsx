@@ -1,4 +1,4 @@
-import { Button, Icon, Text, useToast } from "@fedibtc/ui"
+import { Button, Icon, Text } from "@fedibtc/ui"
 import Flex from "./flex"
 import { categoriesByCode } from "../lib/categories"
 import { Mod } from "../lib/schemas"
@@ -10,12 +10,11 @@ type MiniAppDetails = {
   isInstalled: boolean
   miniApp: Mod
   targetActionType: "copy" | "install"
-  onCopy: () => Promise<void>
   onInstall: () => Promise<void>
 }
 
 const MiniAppDetails = (props: MiniAppDetails) => {
-  const { isInstalled, miniApp, targetActionType, onCopy, onInstall } = props
+  const { isInstalled, miniApp, targetActionType, onInstall } = props
 
   const { isMobile } = useViewport()
   const [viewMoreDescription, setViewMoreDescription] = useState<boolean>(false)
@@ -80,17 +79,19 @@ const MiniAppDetails = (props: MiniAppDetails) => {
             <Text variant="small">{miniApp.description}</Text>
 
             <Flex gap={2} justify="center" align="center">
-              {targetActionType === "install" && (
-                <Button
-                  className="bg-black text-white h-8 p-4"
-                  disabled={isInstalled}
-                  loading={isInstalling}
-                  variant="secondary"
-                  onClick={handleInstallClick}
-                >
-                  {isInstalled ? "Added" : "Add"}
-                </Button>
-              )}
+              <Button
+                className="bg-black text-white h-8 p-4"
+                disabled={isInstalled}
+                loading={isInstalling}
+                variant="secondary"
+                onClick={handleInstallClick}
+              >
+                {targetActionType === "install"
+                  ? isInstalled
+                    ? "Added"
+                    : "Add"
+                  : "Copy"}
+              </Button>
 
               <Flex
                 onClick={() => setShowingQrCode(true)}
@@ -110,13 +111,6 @@ const MiniAppDetails = (props: MiniAppDetails) => {
               <Text variant="caption" className="text-gray-600">
                 {miniApp.url}
               </Text>
-
-              <Flex gap={2} align="center" p={2} onClick={onCopy}>
-                <Icon icon="IconCopy" />
-                <Text weight="medium" variant="caption">
-                  Copy
-                </Text>
-              </Flex>
             </Flex>
 
             {miniApp.extendedDescription !== undefined && (
