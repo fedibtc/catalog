@@ -113,7 +113,7 @@ export default function CatalogItem({
                         <Button
                             className="rounded-full h-4 w-4 p-4"
                             variant="secondary"
-                            onClick={handleAction}
+                            onClick={onCopy}
                         >
                             <Icon
                                 icon="IconCopy"
