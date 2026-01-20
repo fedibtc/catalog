@@ -4,35 +4,35 @@ import { useState } from "react"
 import Flex from "./flex"
 
 type DropdownProps = {
-  children: React.ReactNode
-  title: string
+    children: React.ReactNode
+    title: string
 }
 
 const Dropdown = (props: DropdownProps) => {
-  const { title, children } = props
+    const { title, children } = props
 
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [isOpen, setIsOpen] = useState<boolean>(false)
 
-  const toggleDropdown = () => {
-    setIsOpen(prev => {
-      return !prev
-    })
-  }
+    const toggleDropdown = () => {
+        setIsOpen((prev) => {
+            return !prev
+        })
+    }
 
-  return (
-    <Flex col gap={2}>
-      <Flex justify="between" onClick={toggleDropdown}>
-        <Text className="font-bold">{title}</Text>
+    return (
+        <Flex col gap={2}>
+            <Flex justify="between" onClick={toggleDropdown}>
+                <Text className="font-bold">{title}</Text>
 
-        <Icon
-          icon={`${isOpen ? "IconChevronUp" : "IconChevronDown"}`}
-          size="sm"
-        />
-      </Flex>
+                <Icon
+                    icon={`${isOpen ? "IconChevronUp" : "IconChevronDown"}`}
+                    size="sm"
+                />
+            </Flex>
 
-      {isOpen && children}
-    </Flex>
-  )
+            {isOpen && children}
+        </Flex>
+    )
 }
 
 export default Dropdown
