@@ -68,6 +68,11 @@ export default function CatalogItem({
         }
     }
 
+    const handleCopy = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation()
+        onCopy()
+    }
+
     const modalContent = (
         <Flex col gap={2} className="min-w-[320px] shrink-0">
             <Flex
@@ -113,7 +118,7 @@ export default function CatalogItem({
                         <Button
                             className="rounded-full h-4 w-4 p-4"
                             variant="secondary"
-                            onClick={onCopy}
+                            onClick={handleCopy}
                         >
                             <Icon
                                 icon="IconCopy"
