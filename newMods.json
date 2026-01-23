@@ -4,6 +4,7 @@
     "bitcoinmints",
     "lnesim",
     "lnvpn",
-    "bitcoinflash"
+    "bitcoinflash",
+    "moneybadger",
   ]
 }
