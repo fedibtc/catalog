@@ -1,10 +1,10 @@
 {
   "newModIds": [
-    "2fiat",
     "bitcoinmints",
     "lnesim",
     "lnvpn",
     "bitcoinflash",
-    "moneybadger"
+    "moneybadger",
+    "bitzed"
   ]
 }
