@@ -1,10 +1,10 @@
 {
   "newModIds": [
-    "bitcoinmints",
-    "lnesim",
-    "lnvpn",
     "bitcoinflash",
     "moneybadger",
-    "bitzed"
+    "bitzed",
+    "bitspenda",
+    "chapsmart",
+    "swoop"
   ]
 }
