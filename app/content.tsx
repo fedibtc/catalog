@@ -90,7 +90,7 @@ export default function PageContent({
     )
 
     useEffect(() => {
-        if (window.fediInternal?.version === 2) {
+        if (window.fediInternal?.version >= 2) {
             // eslint-disable-next-line
             setFediApiAvailable(true)
         }
