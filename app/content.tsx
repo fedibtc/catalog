@@ -36,11 +36,16 @@ export default function PageContent({
     )
 
     const canInstall =
-        window?.fediInternal?.version === 2 &&
+        window.fediInternal &&
+        window.fediInternal.version >= 2 &&
         "installMiniApp" in window.fediInternal
 
     const refreshInstalledMiniApps = useCallback(async () => {
-        if (window.fediInternal?.version === 2) {
+        if (
+            window.fediInternal &&
+            window.fediInternal.version >= 2 &&
+            "getInstalledMiniApps" in window.fediInternal
+        ) {
             const installedMiniapps =
                 await window.fediInternal.getInstalledMiniApps()
             setInstalledMiniApps(installedMiniapps)
@@ -61,7 +66,11 @@ export default function PageContent({
     }
 
     const installMiniApp = async (miniApp: Mod) => {
-        if (canInstall && window.fediInternal?.version === 2) {
+        if (
+            window.fediInternal &&
+            window.fediInternal.version >= 2 &&
+            "installMiniApp" in window.fediInternal
+        ) {
             await window.fediInternal?.installMiniApp({
                 id: miniApp.id,
                 title: miniApp.name,
@@ -90,7 +99,7 @@ export default function PageContent({
     )
 
     useEffect(() => {
-        if (window.fediInternal?.version === 2) {
+        if (window.fediInternal && window.fediInternal.version >= 2) {
             // eslint-disable-next-line
             setFediApiAvailable(true)
         }
