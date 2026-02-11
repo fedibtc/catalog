@@ -200,6 +200,9 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
         } else {
             onFilteredListChange(null)
         }
+        // Do NOT add `onFilterSearchChange` or `allMiniApps` as dependencies
+        // or you will get an infinite useEffect loop
+        // eslint-disable-next-line
     }, [
         hasModalFiltersApplied,
         miniAppSearch,
@@ -207,8 +210,6 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
         matchesSelectedCountries,
         matchesSelectedCategories,
         matchesSearch,
-        allMiniApps,
-        onFilteredListChange,
     ])
 
     useEffect(() => {
