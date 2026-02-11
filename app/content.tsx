@@ -107,7 +107,10 @@ export default function PageContent({
 
     const isMiniAppInstalled = (miniApp: Mod): boolean => {
         return installedMiniApps.some((installedMiniApp) => {
-            return installedMiniApp.url === miniApp.url
+            return (
+                new URL(installedMiniApp.url).toString() ===
+                new URL(miniApp.url).toString()
+            )
         })
     }
 
