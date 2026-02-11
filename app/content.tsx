@@ -10,6 +10,7 @@ import Flex from "./components/flex"
 import CatalogItem from "./components/item"
 import MiniAppGroup from "./components/miniAppGroup"
 import { useViewport } from "./components/viewport-provider"
+import { hasFediInternalV2 } from "./lib/injection"
 import { Mod } from "./lib/schemas"
 import { GroupContent } from "./page"
 
@@ -35,21 +36,11 @@ export default function PageContent({
         undefined,
     )
 
-    const canInstall =
-        window.fediInternal &&
-        window.fediInternal.version >= 2 &&
-        "installMiniApp" in window.fediInternal
-
-    const refreshInstalledMiniApps = useCallback(async () => {
-        if (
-            window.fediInternal &&
-            window.fediInternal.version >= 2 &&
-            "getInstalledMiniApps" in window.fediInternal
-        ) {
-            const installedMiniapps =
-                await window.fediInternal.getInstalledMiniApps()
-            setInstalledMiniApps(installedMiniapps)
-        }
+    const refreshInstalledMiniApps = useCallback(() => {
+        if (hasFediInternalV2(window))
+            window.fediInternal
+                .getInstalledMiniApps()
+                .then(setInstalledMiniApps)
     }, [])
 
     const copyMiniAppUrl = (miniApp: Mod) => {
@@ -66,20 +57,15 @@ export default function PageContent({
     }
 
     const installMiniApp = async (miniApp: Mod) => {
-        if (
-            window.fediInternal &&
-            window.fediInternal.version >= 2 &&
-            "installMiniApp" in window.fediInternal
-        ) {
-            await window.fediInternal?.installMiniApp({
+        if (hasFediInternalV2(window)) {
+            await window.fediInternal.installMiniApp({
                 id: miniApp.id,
                 title: miniApp.name,
                 url: miniApp.url,
                 imageUrl: miniApp.iconUrl,
                 description: miniApp.description,
             })
-
-            await refreshInstalledMiniApps()
+            refreshInstalledMiniApps()
         }
     }
 
@@ -99,18 +85,12 @@ export default function PageContent({
     )
 
     useEffect(() => {
-        if (window.fediInternal && window.fediInternal.version >= 2) {
+        if (hasFediInternalV2(window)) {
             // eslint-disable-next-line
             setFediApiAvailable(true)
-        }
-    }, [])
-
-    useEffect(() => {
-        if (fediApiAvailable) {
-            // eslint-disable-next-line
             refreshInstalledMiniApps()
         }
-    }, [fediApiAvailable, refreshInstalledMiniApps])
+    }, [refreshInstalledMiniApps])
 
     const isMiniAppInstalled = (miniApp: Mod): boolean => {
         return installedMiniApps.some((installedMiniApp) => {
@@ -119,7 +99,7 @@ export default function PageContent({
     }
 
     const targetActionType =
-        canInstall && action === "install" ? "install" : "copy"
+        fediApiAvailable && action === "install" ? "install" : "copy"
 
     const renderMiniApp = (miniApp: Mod) => {
         return (
