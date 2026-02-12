@@ -214,7 +214,9 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
 
     useEffect(() => {
         onFilterSearchChange(miniAppSearch)
-    }, [miniAppSearch, onFilterSearchChange])
+        // Do NOT add `onFilterSearchChange` as dependency
+        // eslint-disable-next-line
+    }, [miniAppSearch])
 
     return (
         <Flex col width="full">
