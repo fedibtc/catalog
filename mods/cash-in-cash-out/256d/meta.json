@@ -1,0 +1,10 @@
+{
+    "name": "256 D",
+    "id": "256-d",
+    "url": "https://app.256d.in/home/",
+    "iconUrl": "https://app.256d.in/site-icons/android-chrome-512x512.png",
+    "description": "Scan UPI and pay with Lightning for small amount payment",
+    "extendedDescription": "256 D is an UPI Lightning bridge that enables accepting payments via the Lightning Network. To make payments, users can: Scan static or dynamic UPI QR codes, or Enter the UPI ID manually. Once the UPI ID is validated: A Lightning invoice is generated. The Lightning invoice can be paid using any Lightning wallet. 256D automatically initiates the UPI payment. The INR amount is transferred to the specified UPI ID. UPI transfer usually completes in about 10 seconds. A UPI Reference Number is generated for confirmation. This can be used to verify the payment with the recipient.",
+    "supportedCountryCodes": ["IN"],
+    "keywords": ["emoney", "UPI", "india"]
+}
