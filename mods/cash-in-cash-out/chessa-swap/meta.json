@@ -1,0 +1,8 @@
+{
+    "name": "Chessa Swap",
+    "id": "chessa-swap",
+    "url": "https://www.chessa.ai",
+    "iconUrl": "https://www.chessa.ai/chessa-text.svg",
+    "description": "Send your crypto, receive fiat anywhere. Fast, secure, and affordable way to send money home to your loved ones or to pay a local business",
+    "supportedCountryCodes": [ "CD", "KE", "GH", "IN", "CI", "MW", "MX", "NG", "PH", "RW", "SN", "TZ", "UG", "US", "ZM", "ZW" ]
+}
