@@ -1,0 +1,10 @@
+{
+    "name": "Bitcoinstitution",
+    "id": "bitcoinstitution",
+    "url": "https://bitcoinstitution.xyz/",
+    "iconUrl": "https://bitcoinstitution.xyz/favicon.png",
+    "description": "Turning bitcoin enthusiasts to bitcoin leaders through standardized knowledge",
+    "extendedDescription": "Bitcoinstitution trains and certifies bitcoin leaders through structured programs, verified speaking opportunities, and licensed curriculum—addressing the fact that without credibility, structure, and authority, even the right message gets ignored.",
+    "supportedCountryCodes": ["ID"],
+    "keywords": ["bitcoin", "education"]
+}
