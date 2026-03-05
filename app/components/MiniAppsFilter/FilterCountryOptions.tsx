@@ -13,7 +13,7 @@ const REDUCED_COUNTRY_LIST_LENGTH = 6
 
 type FilterCountryOptionsProps = {
     searchQuery: string
-    selectedCountryCodes: Partial<Record<CountryCode, boolean>>
+    selectedCountryCodes: Array<CountryCode>
     selectedRegionCode: RegionCode | undefined
     onCountryCodeSelectedChange: (
         countryCode: CountryCode,
@@ -59,7 +59,7 @@ const FilterCountryOptions = (props: FilterCountryOptionsProps) => {
         : filteredCountryCodes.slice(0, REDUCED_COUNTRY_LIST_LENGTH)
 
     const countryOptions = visibleCountryCodes.map((countryCode) => {
-        const isSelected = selectedCountryCodes[countryCode] === true
+        const isSelected = selectedCountryCodes.includes(countryCode)
         const countryName = countriesByCountryCode[countryCode].displayName
 
         return (

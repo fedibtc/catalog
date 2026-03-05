@@ -1,11 +1,11 @@
 import { Button, Dialog, Icon, Input, Text } from "@fedibtc/ui"
 import { useCallback, useEffect, useState } from "react"
+import { useMiniAppsFilterURLState } from "../../hooks/useMiniAppsFilterURLState"
 import { categoriesByCode, CategoryCode } from "../../lib/categories"
 import {
     countriesByCountryCode,
     CountryCode,
     isCountryInRegion,
-    RegionCode,
     regionsByRegionCode,
 } from "../../lib/countries"
 import { Mod } from "../../lib/schemas"
@@ -19,38 +19,34 @@ import FilterRegionOptions from "./FilterRegionOptions"
 type MiniAppsFilterProps = {
     allMiniApps: Mod[]
     onFilteredListChange: (filteredMiniApps: Mod[] | null) => void
-    onFilterSearchChange: (search: string) => void
 }
 
 const MiniAppsFilter = (props: MiniAppsFilterProps) => {
-    const { allMiniApps, onFilteredListChange, onFilterSearchChange } = props
-
+    const { allMiniApps, onFilteredListChange } = props
     const { isMobile } = useViewport()
 
-    const [miniAppSearch, setMiniAppSearch] = useState<string>("")
-    const [isModalOpen, setModalOpen] = useState<boolean>(false)
-    const [selectedRegionCode, setSelectedRegionCode] = useState<
-        RegionCode | undefined
-    >(undefined)
-    const [selectedCountryCodes, setSelectedCountryCodes] = useState<
-        Partial<Record<CountryCode, boolean>>
-    >({})
-    const [selectedCategoryCodes, setSelectedCategoryCodes] = useState<
-        Partial<Record<CategoryCode, boolean>>
-    >({})
+    const {
+        search: miniAppSearch,
+        setSearch: setMiniAppSearch,
+        region: selectedRegionCode,
+        setRegion: setSelectedRegionCode,
+        countries: selectedCountryCodes,
+        toggleCountry: toggleCountryCode,
+        categories: selectedCategoryCodes,
+        toggleCategory: toggleCategoryCode,
+        resetFilters,
+        hasActiveFilters,
+    } = useMiniAppsFilterURLState()
 
+    const [isModalOpen, setModalOpen] = useState<boolean>(false)
     const [countrySearch, setCountrySearch] = useState<string>("")
 
-    const hasRegionFilter = selectedRegionCode !== undefined
-    const hasCountryFilter = Object.values(selectedCountryCodes).some(
-        (isEnabled) => isEnabled,
-    )
-    const hasCategoryFilter = Object.values(selectedCategoryCodes).some(
-        (isEnabled) => isEnabled,
-    )
+    const hasCountryFilter = selectedCountryCodes.length > 0
+    const hasCategoryFilter = selectedCategoryCodes.length > 0
 
     const matchesSelectedRegion = useCallback(
         (miniApp: Mod) => {
+            const hasRegionFilter = selectedRegionCode !== undefined
             const matchesGlobal =
                 selectedRegionCode === "GLOBAL" &&
                 miniApp.supportedCountryCodes.length === 0
@@ -58,19 +54,19 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
             const isInRegion =
                 selectedRegionCode !== undefined &&
                 miniApp.supportedCountryCodes.some((countryCode) => {
-                    isCountryInRegion(countryCode, selectedRegionCode)
+                    return isCountryInRegion(countryCode, selectedRegionCode)
                 })
 
             return !hasRegionFilter || matchesGlobal || isInRegion
         },
-        [hasRegionFilter, selectedRegionCode],
+        [selectedRegionCode],
     )
 
     const matchesSelectedCountries = useCallback(
         (miniApp: Mod) => {
             const matchesCountry = miniApp.supportedCountryCodes.some(
                 (countryCode) => {
-                    return selectedCountryCodes[countryCode] === true
+                    return selectedCountryCodes.includes(countryCode)
                 },
             )
 
@@ -81,8 +77,9 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
 
     const matchesSelectedCategories = useCallback(
         (miniApp: Mod) => {
-            const matchesCategory =
-                selectedCategoryCodes[miniApp.categoryCode] === true
+            const matchesCategory = selectedCategoryCodes.includes(
+                miniApp.categoryCode,
+            )
 
             return !hasCategoryFilter || matchesCategory
         },
@@ -111,78 +108,45 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
         [miniAppSearch],
     )
 
-    const hasModalFiltersApplied =
-        hasRegionFilter || hasCountryFilter || hasCategoryFilter
-
     const filterDescriptions = []
-    if (hasRegionFilter) {
+    if (selectedRegionCode) {
         filterDescriptions.push(
             `Region: ${regionsByRegionCode[selectedRegionCode].displayName}`,
         )
     }
 
     if (hasCountryFilter) {
-        const countries = []
-
-        for (const entry of Object.entries(selectedCountryCodes)) {
-            const [countryCode, isEnabled] = entry as [CountryCode, boolean]
-            if (isEnabled) {
-                countries.push(countriesByCountryCode[countryCode].displayName)
-            }
-        }
-
+        const countries = selectedCountryCodes.map(
+            (countryCode) => countriesByCountryCode[countryCode].displayName,
+        )
         filterDescriptions.push(`Country: ${countries.join(", ")}`)
     }
 
     if (hasCategoryFilter) {
-        const categories = []
-
-        for (const entry of Object.entries(selectedCategoryCodes)) {
-            const [categoryCode, isEnabled] = entry as [CategoryCode, boolean]
-            if (isEnabled) {
-                categories.push(categoriesByCode[categoryCode].displayName)
-            }
-        }
-
+        const categories = selectedCategoryCodes.map(
+            (categoryCode) => categoriesByCode[categoryCode].displayName,
+        )
         filterDescriptions.push(`Category: ${categories.join(", ")}`)
     }
 
     const filterDescriptionText = filterDescriptions.join("; ")
 
-    const resetModalFilters = () => {
-        setCountrySearch("")
-        setSelectedRegionCode(undefined)
-        setSelectedCountryCodes({})
-        setSelectedCategoryCodes({})
-    }
-
     const setCountryCodeSelected = (
         countryCode: CountryCode,
         isSelected: boolean,
     ) => {
-        setSelectedCountryCodes((prev) => {
-            return {
-                ...prev,
-                [countryCode]: isSelected,
-            }
-        })
+        toggleCountryCode(countryCode, isSelected)
     }
 
     const setCategoryCodeSelected = (
         categoryCode: CategoryCode,
         isSelected: boolean,
     ) => {
-        setSelectedCategoryCodes((prev) => {
-            return {
-                ...prev,
-                [categoryCode]: isSelected,
-            }
-        })
+        toggleCategoryCode(categoryCode, isSelected)
     }
 
     useEffect(() => {
-        const hasFiltersApplied =
-            hasModalFiltersApplied || miniAppSearch.length > 0
+        const hasFiltersApplied = hasActiveFilters || miniAppSearch.length > 0
 
         if (hasFiltersApplied) {
             const filteredMiniApps: Mod[] = Object.values(allMiniApps).filter(
@@ -200,23 +164,17 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
         } else {
             onFilteredListChange(null)
         }
-        // Do NOT add `onFilterSearchChange` or `allMiniApps` as dependencies
+        // Do NOT add `allMiniApps` as dependency
         // or you will get an infinite useEffect loop
         // eslint-disable-next-line
     }, [
-        hasModalFiltersApplied,
+        hasActiveFilters,
         miniAppSearch,
         matchesSelectedRegion,
         matchesSelectedCountries,
         matchesSelectedCategories,
         matchesSearch,
     ])
-
-    useEffect(() => {
-        onFilterSearchChange(miniAppSearch)
-        // Do NOT add `onFilterSearchChange` as dependency
-        // eslint-disable-next-line
-    }, [miniAppSearch])
 
     return (
         <Flex col width="full">
@@ -236,7 +194,7 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
                 >
                     <Icon icon="IconFilter" size="sm" />
 
-                    {hasModalFiltersApplied && (
+                    {hasActiveFilters && (
                         <Icon
                             icon="IconCircleFilled"
                             size="xxs"
@@ -270,10 +228,10 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
                                     Filter
                                 </Text>
 
-                                {hasModalFiltersApplied && (
+                                {hasActiveFilters && (
                                     <Text
                                         className="text-blue"
-                                        onClick={resetModalFilters}
+                                        onClick={resetFilters}
                                         data-testid="filter-reset"
                                     >
                                         Reset
