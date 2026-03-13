@@ -1,0 +1,9 @@
+{
+    "name": "bitsimp",
+    "id": "bitsimp",
+    "url": "https://bitsimp.com/",
+    "iconUrl": "https://bitsimp.com/favicon.ico",
+    "description": "Bitcoin-only Anonymous Content Marketplace.",
+    "extendedDescription": "bitSimp is a Bitcoin-only P2P Anonymous Content Marketplace. Our goal is to provide a platform for creators to distribute their content while addressing the problems found in other platforms.\n\nContent Marketplace. Basically like OnlyFans, Patreon, Fansly, etc. Creators can post content and simps can pay to unlock it.\n\nAnonymous. We believe that privacy is a right, not a privilege. One of the hassles of consuming content is having to create an account and risking doxxing. We don't require any personal information to use the platform, we use an anonymous and military-grade secure authentication protocol named LNURL-auth, you only need a Lightning wallet to use it. We also support NIP-07 Login with Nostr.\n\nP2P means peer-to-peer. We don't take any fees, you can withdraw your money instantly at any time with a Lightning withdrawal request. We take 0% withdrawal fees.\n\nBitcoin-only. We only accept Bitcoin. It is the money of the internet, permissionless, and censorship-resistant. Nobody tracks your transactions, nobody knows who you are or what you bought. Nobody can take it from you or block you from using it. And it is the only form of money that actually has value. It is backed by the energy that is used to mine and secure it.\n\nSee more: https://bitsimp.com/about",
+    "keywords": ["anonymous", "content", "marketplace", "onlyfans", "creators", "bitcoin only", "zero-fees"]
+}
