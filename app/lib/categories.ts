@@ -5,6 +5,7 @@ export const categoryCodes = [
     "misc",
     "productivities",
     "spend-earn-bitcoin",
+    "games",
 ] as const
 
 export type CategoryCode = (typeof categoryCodes)[number]
@@ -31,5 +32,8 @@ export const categoriesByCode: Record<CategoryCode, CategoryInfo> = {
     },
     "spend-earn-bitcoin": {
         displayName: "Spend and Earn Bitcoin",
+    },
+    games: {
+        displayName: "Games",
     },
 }
