@@ -3,18 +3,16 @@ name: Pull Request CI
 on: pull_request
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-      - uses: oven-sh/setup-bun@v1
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v4
 
-      - name: Install Dependencies
-        run: bun i
+            - uses: cachix/install-nix-action@v30
+              with:
+                  nix_path: nixpkgs=channel:nixos-25.05
 
-      - name: Check code style
-        run: bun format:check
-
-      - name: Lint
-        run: bun lint
+            - name: Run code quality checks
+              run: nix develop -c ./scripts/check-ui-code.sh
