@@ -18,6 +18,30 @@ export default defineConfig({
         {
             name: "chromium",
             use: { ...devices["Desktop Chrome"] },
+            testIgnore: [
+                "**/image-health/**",
+                "**/visual-regression/**",
+            ],
+        },
+        {
+            name: "image-health",
+            testMatch: "**/image-health/**/*.spec.ts",
+            use: { ...devices["Desktop Chrome"] },
+            timeout: 60_000,
+            retries: 0,
+        },
+        {
+            name: "visual-regression",
+            testMatch: "**/visual-regression/**/*.spec.ts",
+            use: { ...devices["Desktop Chrome"] },
+            timeout: 60_000,
+            retries: 1,
+            expect: {
+                toHaveScreenshot: {
+                    maxDiffPixelRatio: 0.01,
+                    threshold: 0.2,
+                },
+            },
         },
     ],
     webServer: {
