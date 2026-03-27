@@ -1,10 +1,10 @@
 {
   "newModIds": [
-    "chessa-swap",
     "bitcoinstitution",
     "timechain-calendar",
     "turtle-word-game",
     "bitsimp",
-    "mariachi-vs-inflation"
+    "mariachi-vs-inflation",
+    "sgx-remit"
   ]
 }
