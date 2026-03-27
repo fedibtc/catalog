@@ -1,6 +1,7 @@
 import { Button, Icon, Text } from "@fedibtc/ui"
 import { useEffect, useState } from "react"
 import QRCode from "react-qr-code"
+import { miniAppTestId } from "../../e2e/helpers/test-ids"
 import { categoriesByCode } from "../lib/categories"
 import { Mod } from "../lib/schemas"
 import Flex from "./flex"
@@ -29,6 +30,8 @@ const MiniAppDetails = (props: MiniAppDetails) => {
         setIsInstalling(false)
     }, [miniApp])
 
+    const detailsTestId = `${miniAppTestId(miniApp.name)}-details`
+
     const handleInstallClick = async () => {
         setIsInstalling(true)
 
@@ -40,7 +43,7 @@ const MiniAppDetails = (props: MiniAppDetails) => {
     }
 
     return (
-        <div className="h-full w-full">
+        <div className="h-full w-full" data-testid={detailsTestId}>
             {showingQrCode ? (
                 <Flex
                     align="center"
@@ -48,6 +51,7 @@ const MiniAppDetails = (props: MiniAppDetails) => {
                     height="full"
                     width="full"
                     className={`${isMobile ? "bg-black" : ""}`}
+                    data-testid={`${detailsTestId}-qr-view`}
                 >
                     <Icon
                         onClick={() => setShowingQrCode(false)}
@@ -55,6 +59,7 @@ const MiniAppDetails = (props: MiniAppDetails) => {
                         width={32}
                         height={32}
                         className={`${isMobile ? "bg-black text-white" : "bg-white text-black"} absolute top-4 right-4 cursor-pointer`}
+                        data-testid={`${detailsTestId}-qr-close`}
                     />
 
                     <Flex
@@ -94,6 +99,7 @@ const MiniAppDetails = (props: MiniAppDetails) => {
                                     loading={isInstalling}
                                     variant="secondary"
                                     onClick={handleInstallClick}
+                                    data-testid={`${detailsTestId}-${isInstalled ? "added" : "add"}`}
                                 >
                                     {isInstalled ? "Added" : "Add"}
                                 </Button>
@@ -104,6 +110,7 @@ const MiniAppDetails = (props: MiniAppDetails) => {
                                 align="center"
                                 justify="center"
                                 className="p-2 rounded-full cursor-pointer border border-extraLightGrey border-solid"
+                                data-testid={`${detailsTestId}-qr-open`}
                             >
                                 <Icon
                                     icon="IconQrcode"
@@ -117,12 +124,19 @@ const MiniAppDetails = (props: MiniAppDetails) => {
                             align="center"
                             justify="between"
                             className="py-1 px-4 rounded-xl border border-extraLightGrey cursor-pointer border-solid"
+                            data-testid={`${detailsTestId}-url`}
                         >
                             <Text variant="caption" className="text-gray-600">
                                 {miniApp.url}
                             </Text>
 
-                            <Flex gap={2} align="center" p={2} onClick={onCopy}>
+                            <Flex
+                                gap={2}
+                                align="center"
+                                p={2}
+                                onClick={onCopy}
+                                data-testid={`${detailsTestId}-copy`}
+                            >
                                 <Icon icon="IconCopy" />
                                 <Text weight="medium" variant="caption">
                                     Copy
@@ -143,6 +157,7 @@ const MiniAppDetails = (props: MiniAppDetails) => {
                                         setViewMoreDescription((prev) => !prev)
                                     }
                                     className="cursor-pointer"
+                                    data-testid={`${detailsTestId}-toggle-description`}
                                 >
                                     <Text>
                                         View{" "}

@@ -4,6 +4,7 @@ import {
     countryCodes,
     RegionCode,
 } from "@/app/lib/countries"
+import { filterOptionTestId } from "@/e2e/helpers/test-ids"
 import { Checkbox, Text } from "@fedibtc/ui"
 import { useState } from "react"
 import Flex from "../flex"
@@ -68,6 +69,7 @@ const FilterCountryOptions = (props: FilterCountryOptionsProps) => {
                 onClick={() =>
                     onCountryCodeSelectedChange(countryCode, !isSelected)
                 }
+                data-testid={filterOptionTestId("country", countryName)}
             >
                 <Checkbox checked={isSelected} />
 
@@ -95,6 +97,7 @@ const FilterCountryOptions = (props: FilterCountryOptionsProps) => {
                     <Text
                         className="font-bold"
                         onClick={() => setShowingAllCountries(true)}
+                        data-testid="country-view-more"
                     >
                         View more
                     </Text>
