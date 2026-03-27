@@ -1,0 +1,9 @@
+{
+    "name": "SGX Remit",
+    "id": "sgx-remit",
+    "url": "https://www.sgxremit.com/",
+    "iconUrl": "https://www.sgxremit.com/logo.png",
+    "description": "SGX Remit converts crypto into EcoCash for instant local payouts",
+    "extendedDescription": "SGX Remit is a digital remittance solution that enables seamless conversion of cryptocurrency into EcoCash for fast, reliable local payouts in Zimbabwe. It bridges global crypto liquidity with everyday financial access, allowing users to send value across borders and have it received instantly in EcoCash wallets in Zimbabwe. Designed for efficiency and accessibility, SGX Remit removes the opaqueness of peer to peer, unreliability and friction of traditional remittance channels, such as high fees, long settlement times, and limited access to banking infrastructure. The platform supports secure crypto-to-fiat conversion while complying with local payment ecosystems, making it ideal for individuals, businesses, and institutions that need dependable cross-border transfers. By leveraging blockchain technology alongside established mobile money networks, SGX Remit empowers recipients to access funds immediately for daily transactions, bill payments, and cash withdrawals.",
+    "supportedCountryCodes": ["ZW"]
+}
