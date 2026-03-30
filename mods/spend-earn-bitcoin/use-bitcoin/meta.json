@@ -1,0 +1,10 @@
+{
+    "name": "UseBitcoin",
+    "id": "use-bitcoin",
+    "url": "https://usebitcoin.jp/",
+    "iconUrl": "https://usebitcoin.jp/favicon.ico",
+    "description": "Buy prepaid Japan card codes using Bitcoin’s Lightning Network.",
+    "extendedDescription": "Usebitcoin offers V-Preca Gift, DMM Points, Kyash gift codes, BitCash, au PAY gift cards, QUO Card Pay, and more, with new products added regularly. The operator, Cachet, is a Bitcoin-focused fintech company with the mission: “Bitcoin on every street—bringing Bitcoin payments to every street in the world.",
+    "supportedCountryCodes": ["JP"],
+    "keywords": ["Bitcoin", "Lightning", "gift card"]
+}
