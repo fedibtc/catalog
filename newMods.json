@@ -1,11 +1,10 @@
 {
   "newModIds": [
-    "bitcoinstitution",
-    "timechain-calendar",
     "turtle-word-game",
     "bitsimp",
     "mariachi-vs-inflation",
     "sgx-remit",
-    "use-bitcoin"
+    "use-bitcoin",
+    "exolix"
   ]
 }
