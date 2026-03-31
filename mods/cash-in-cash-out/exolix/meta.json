@@ -1,0 +1,9 @@
+{
+    "name": "Exolix",
+    "id": "exolix",
+    "url": "https://exchange.exolix.com/cex?coinFrom=BTC:LIGHTNING&coinTo=USDT:TRX&amountFrom=0.001&partnerId=Fedi&withHelp=1&services=cex&apiToken=5h4N2Uq9K99CfTx5L5g9PqjTov0MfGgs8gyPG5ZpeUu3dFeajNdhLzY6ruRbsW3J",
+    "iconUrl": "https://exolix.com/apple-touch-icon.ico",
+    "description": "Exolix is a multichain swap aggregator for instant, no-KYC exchanges.",
+    "extendedDescription": "Exolix is a multichain swap aggregator with Bitcoin Lightning support, offering instant and secure exchanges with fixed and floating rates. Launched in 2018, Exolix is recognized for its fast, reliable service and strong focus on privacy, allowing users to swap assets without registration or limits.",
+    "keywords": ["swap"]
+}
