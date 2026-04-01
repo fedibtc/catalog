@@ -226,9 +226,14 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
                     value={miniAppSearch}
                     onChange={(e) => setMiniAppSearch(e.currentTarget.value)}
                     placeholder="Search Mini Apps or keywords"
+                    data-testid="catalog-search-input"
                 />
 
-                <div className="relative" onClick={() => setModalOpen(true)}>
+                <div
+                    className="relative"
+                    onClick={() => setModalOpen(true)}
+                    data-testid="filter-trigger"
+                >
                     <Icon icon="IconFilter" size="sm" />
 
                     {hasModalFiltersApplied && (
@@ -236,13 +241,14 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
                             icon="IconCircleFilled"
                             size="xxs"
                             className="text-red absolute top-[-2px] right-[-4px]"
+                            data-testid="filter-active-indicator"
                         />
                     )}
                 </div>
             </Flex>
 
             {filterDescriptionText.length > 0 && (
-                <Flex p={1}>
+                <Flex p={1} data-testid="filter-description">
                     <Text className="italic">{filterDescriptionText}</Text>
                 </Flex>
             )}
@@ -255,6 +261,7 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
             >
                 <div
                     className={`${isMobile ? "h-full" : "h-[500px]"} overflow-scroll`}
+                    data-testid="filter-dialog"
                 >
                     <Flex col className="h-full w-full" justify="between">
                         <Flex col gap={2} grow className="overflow-scroll p-4">
@@ -267,6 +274,7 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
                                     <Text
                                         className="text-blue"
                                         onClick={resetModalFilters}
+                                        data-testid="filter-reset"
                                     >
                                         Reset
                                     </Text>
@@ -281,6 +289,7 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
                                             setCountrySearch(e.target.value)
                                         }
                                         placeholder="Search countries"
+                                        data-testid="country-search-input"
                                     />
 
                                     <FilterRegionOptions
@@ -328,6 +337,7 @@ const MiniAppsFilter = (props: MiniAppsFilterProps) => {
                                 width="full"
                                 onClick={() => setModalOpen(false)}
                                 className="bg-black text-white"
+                                data-testid="filter-apply"
                             >
                                 Apply
                             </Button>
