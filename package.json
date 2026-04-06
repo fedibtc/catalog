@@ -12,6 +12,9 @@
     "format:check": "prettier --check \"app/**/*.{ts,tsx,css}\"",
     "type-check": "tsc --noEmit",
     "lint:all": "bun run lint:check && bun run format:check && bun run type-check",
+    "test:e2e": "bunx playwright test",
+    "test:e2e:ui": "bunx playwright test --ui",
+    "test:e2e:headed": "bunx playwright test --headed",
     "postinstall": "patch-package"
   },
   "trustedDependencies": [
@@ -29,6 +32,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@types/node": "^20.8.10",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -37,10 +41,10 @@
     "eslint-config-next": "16.0.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
-    "prettier": "^3.6.2",
-    "prettier-plugin-organize-imports": "^4.3.0",
     "patch-package": "^8.0.1",
     "postcss": "^8",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.3.0",
     "tailwindcss": "^3",
     "typescript": "^5.2.2"
   }

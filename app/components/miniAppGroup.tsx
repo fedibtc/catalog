@@ -1,4 +1,5 @@
 import { Text } from "@fedibtc/ui"
+import { miniAppGroupTestId } from "../../e2e/helpers/test-ids"
 import { Mod } from "../lib/schemas"
 import Flex from "./flex"
 
@@ -20,9 +21,20 @@ const MiniAppGroup = (props: MiniAppGroupProps) => {
     })
 
     return (
-        <Flex col gap={4} p={4} width="full" className="max-w-[1200px]">
+        <Flex
+            col
+            gap={4}
+            p={4}
+            width="full"
+            className="max-w-[1200px]"
+            data-testid={miniAppGroupTestId(groupName)}
+        >
             <Flex align="center" gap={2}>
-                <Text variant="h2" weight="medium">
+                <Text
+                    variant="h2"
+                    weight="medium"
+                    data-testid={`${miniAppGroupTestId(groupName)}-heading`}
+                >
                     {groupName}
                 </Text>
             </Flex>

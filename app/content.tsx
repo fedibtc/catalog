@@ -199,6 +199,7 @@ export default function PageContent({
                 >
                     <div
                         className={`${isMobile ? "h-full" : "h-[700px]"} overflow-scroll p-0!`}
+                        data-testid="mini-app-details-dialog"
                     >
                         <Icon
                             onClick={() => setMoreDetailsApp(undefined)}
@@ -206,6 +207,7 @@ export default function PageContent({
                             width={24}
                             height={24}
                             className="absolute top-4 right-4 cursor-pointer"
+                            data-testid="mini-app-details-dialog-close"
                         />
 
                         <MiniAppDetails
