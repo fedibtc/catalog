@@ -10,6 +10,7 @@ import Flex from "./components/flex"
 import CatalogItem from "./components/item"
 import MiniAppGroup from "./components/miniAppGroup"
 import { useViewport } from "./components/viewport-provider"
+import { useMiniAppsFilterURLState } from "./hooks/useMiniAppsFilterURLState"
 import { Mod } from "./lib/schemas"
 import { GroupContent } from "./page"
 
@@ -25,11 +26,11 @@ export default function PageContent({
     const toast = useToast()
     const { isMobile } = useViewport()
 
+    const { search: filterSearch } = useMiniAppsFilterURLState()
     const [fediApiAvailable, setFediApiAvailable] = useState<boolean>(false)
     const [installedMiniApps, setInstalledMiniApps] = useState<
         { url: string }[]
     >([])
-    const [filterSearch, setFilterSearch] = useState<string>("")
     const [filteredMiniApps, setFilteredMiniApps] = useState<Mod[] | null>(null)
     const [moreDetailsApp, setMoreDetailsApp] = useState<Mod | undefined>(
         undefined,
@@ -171,7 +172,6 @@ export default function PageContent({
                 <MiniAppsFilter
                     allMiniApps={Object.values(allMiniAppsById)}
                     onFilteredListChange={setFilteredMiniApps}
-                    onFilterSearchChange={setFilterSearch}
                 />
             </Flex>
 

@@ -13,7 +13,7 @@ const SORTED_CATEGORY_CODES: CategoryCode[] = [
 ]
 
 type FilterCategoryOptionsProps = {
-    selectedCategoryCodes: Partial<Record<CategoryCode, boolean>>
+    selectedCategoryCodes: Array<CategoryCode>
     onCategoryCodeSelectedChange: (
         categoryCode: CategoryCode,
         isSelected: boolean,
@@ -24,7 +24,7 @@ const FilterCategoryOptions = (props: FilterCategoryOptionsProps) => {
     const { selectedCategoryCodes, onCategoryCodeSelectedChange } = props
 
     const categoryOptions = SORTED_CATEGORY_CODES.map((categoryCode) => {
-        const isSelected = selectedCategoryCodes[categoryCode] === true
+        const isSelected = selectedCategoryCodes.includes(categoryCode)
         const categoryName = categoriesByCode[categoryCode].displayName
 
         return (
