@@ -1,0 +1,9 @@
+{
+    "name": "Banxaas",
+    "id": "banxaas",
+    "url": "https://banxaas.com",
+    "iconUrl": "https://banxaas.com/banxaas_logo_512x512.png",
+    "description": "Banxaas is an instant swap platform offering Bitcoin on-ramp/off-ramp solution with Mobile money networks, as well as cross swaps between mobile money operators from the same country or from different countries.",
+    "extendedDescription": "Banxaas is an instant swap platform offering 3 types of operations:\n\n- Fiat to Sats (BTC): swap your fiat for Bitcoin via Mobile Money.\n- Sats (BTC) to Fiat: swap your Bitcoin for fiat, received directly on your Mobile Money wallet.\n- Mobile Money to Mobile Money: transfer fiat between operators and across countries.\n\nBanxaas covers 4 countries (Senegal, Ivory Coast, Guinea, Cameroon) and 10 Mobile Money operators (Wave, Orange Money, MTN, etc.).\n\nPowered by Bitcoin's Lightning Network and Mobile Money APIs, for fast and secure transactions.\n\nBanxaas is developed by Yité Technologies, a Bitcoin start-up based in Senegal.",
+    "keywords": ["bitcoin", "mobile money", "swap", "west africa", "xof", "xaf", "gnf"]
+}
