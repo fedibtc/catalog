@@ -1,0 +1,9 @@
+{
+    "name": "Retiro Bitcoin",
+    "id": "retiro-bitcoin",
+    "url": "https://calculadora-de-retiro-bitcoin-fedi.vercel.app/",
+    "iconUrl": "https://calculadora-de-retiro-bitcoin-fedi.vercel.app/assets/logo-512.png",
+    "description": "Plan your financial independence with Bitcoin savings & projections",
+    "extendedDescription": "A Bitcoin retirement planning calculator designed as a Fedi Mini App. Users input their initial savings (BTC or fiat), periodic contributions (daily/weekly/monthly), time horizon, expected annual return, and optional local inflation rate to project their financial independence path. Features include: interactive growth charts, real-time BTC price conversion via CoinGecko, multi-language support (ES/EN/PT/FR), dark/light theme, PDF report export, Safe Withdrawal Rate (SWR 4%) simulation, Google Calendar savings reminders, and CoinGecko price alerts setup guide. Integrates with Fedi via WebLN for Lightning payments (premium plan), Nostr NIP-07/NIP-78 for identity and saving plans, and window.fedi for currency/language preferences. Freemium model: free tier includes single scenario with basic results; premium ($1 USD/month or $10 USD lifetime via Lightning) unlocks 3 scenario comparison, PDF export, plan saving, and SWR simulation. Includes a referral CTA for buying BTC through Aureo (Mexico users). Fully mobile-first, works standalone outside Fedi.",
+    "keywords": ["bitcoin", "retirement", "calculator", "savings", "financial planning", "lightning", "DCA", "investment", "projection"]
+}
