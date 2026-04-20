@@ -1,0 +1,9 @@
+{
+    "name": "Bitmol",
+    "id": "bitmol",
+    "url": "https://bitmol.thunderlabs.in/",
+    "iconUrl": "https://bitmol.thunderlabs.in/favicon.png",
+    "description": "Compare BTC/INR rates across Indian exchanges + P2P tools",
+    "extendedDescription": "Bitmol aggregates BTC/INR rates across Indian exchanges, helping users quickly identify the best prices and custody options. It surfaces pricing spreads and flags whether exchanges support self-custody. For P2P traders, Bitmol includes a premium calculator to easily convert between BTC and INR based on custom spreads.",
+    "keywords": ["Bitcoin", "India", "BTC INR", "P2P", "Arbitrage", "Exchange", "Comparison"]
+}
