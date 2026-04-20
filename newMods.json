@@ -1,10 +1,10 @@
 {
   "newModIds": [
-    "bitsimp",
-    "mariachi-vs-inflation",
     "sgx-remit",
     "use-bitcoin",
     "exolix",
-    "banxaas"
+    "banxaas",
+    "retiro-bitcoin",
+    "bitmol"
   ]
 }
