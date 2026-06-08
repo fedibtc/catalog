@@ -1,0 +1,10 @@
+{
+    "name": "Desiboard",
+    "id": "desiboard",
+    "url": "https://desiboard.thevikas.com/",
+    "iconUrl": "https://desiboard.thevikas.com/android-chrome-512x512.png",
+    "description": "Explore real-time Bitcoin Price for Indian",
+    "extendedDescription": "Desiboard is a simple and fast live dashboard built for Indian users who want to track the real-time Bitcoin price in INR without confusion. It updates continuously so you always see the latest BTC market value, making it easier to follow price movements as they happen. Designed with a clean and accessible layout, it helps beginners and active traders quickly understand Bitcoin’s value in Indian Rupees, check key market data, and stay informed without needing complex crypto platforms. This makes it a useful everyday tool for anyone in India who wants clear, instant Bitcoin price insights in one place.",
+    "supportedCountryCodes": ["IN"],
+    "keywords": ["dashboard", "bitcoin price", "india"]
+}
