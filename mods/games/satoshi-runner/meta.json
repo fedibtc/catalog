@@ -1,0 +1,9 @@
+{
+    "name": "Satoshi Runner",
+    "id": "satoshi-runner",
+    "url": "https://sat-runner.vercel.app/",
+    "iconUrl": "https://sat-runner.vercel.app/icon.png",
+    "description": "Endless runner game - die once, pay 1 sat to keep running forever.",
+    "extendedDescription": "A never-ending neon runner built for the Lightning Network. Jump and slide through an endless synthwave landscape. The moment you crash, the run ends. The only way back in is paying 1 satoshi, settled instantly against your own node via Nostr Wallet Connect (NIP-47). No accounts, no ads, no free retries - just a tiny real Bitcoin payment to keep running.",
+    "keywords": []
+}
