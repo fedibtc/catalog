@@ -1,0 +1,9 @@
+{
+    "name": "Satoshi Snake",
+    "id": "satoshi-snake",
+    "url": "https://satoshi-snake.vercel.app/",
+    "iconUrl": "https://satoshi-snake.vercel.app/icon.svg",
+    "description": "Play Snake, earn sats, and continue with Lightning",
+    "extendedDescription": "Satoshi Snake is a neon arcade Snake game with real Lightning rewards. Players earn 2 sats for every 5 points, claim their reward at game over to a Lightning address, LNURL, or BOLT11 invoice, and can pay 1 sat to continue after losing. Payments are handled through Alby Hub using Nostr Wallet Connect.",
+    "keywords": ["game", "arcade", "snake", "lightning"]
+}
