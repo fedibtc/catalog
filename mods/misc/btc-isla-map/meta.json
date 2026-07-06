@@ -1,0 +1,9 @@
+{
+    "name": "BTC Isla Map",
+    "id": "btc-isla-map",
+    "url": "https://www.btcislamap.org",
+    "iconUrl": "https://www.btcislamap.org/btcisla_logo.png",
+    "description": "BTC Isla Map of Bitcoin Accepting Merchants",
+    "extendedDescription": "Interactive web map of all Bitcoin accepting merchants within the BTC Isla circular economy (Isla Mujeres, Mexico). All merchant locations are stored and managed using BTCMap and rendered using the BTCMap API.",
+    "keywords": ["map", "merchants", "bitcoin", "mexico"]
+}
