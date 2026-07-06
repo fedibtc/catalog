@@ -1,0 +1,9 @@
+{
+    "name": "Tapnob",
+    "id": "tapnob",
+    "url": "https://www.tapnob.com/fedi",
+    "iconUrl": "https://www.tapnob.com/icons/icon-512x512.png",
+    "description": "Buy Bitcoin and convert Lightning payments to Nigerian Naira instantly",
+    "extendedDescription": "Tapnob is a Bitcoin payments platform that lets users buy Bitcoin and spend it in Nigeria. Through the Fedi mini app, users can purchase Bitcoin or send Lightning payments that are instantly converted to Naira and settled directly into Nigerian bank accounts. Tapnob provides fast settlement, transparent exchange rates, and a simple way to move between Bitcoin and local currency without requiring recipients to use Bitcoin.",
+    "keywords": ["bitcoin", "offramp", "naira", "nigeria", "lightning"]
+}
