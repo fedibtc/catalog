@@ -1,0 +1,9 @@
+{
+    "name": "LNemail",
+    "id": "lnemail",
+    "url": "https://lnemail.net/",
+    "iconUrl": "https://blossom.primal.net/c0394dd3eccea8e070d4b24ed0b1300cec286203f4f51503850f47250021af78.jpg",
+    "description": "Fast Anonymous Email Accounts",
+    "extendedDescription": "Get instant disposable email addresses powered by Bitcoin Lightning Network. No personal information required - just pay with Lightning and start sending and receiving emails immediately.",
+    "keywords": ["email", "privacy", "anonymous", "lightning"]
+}
