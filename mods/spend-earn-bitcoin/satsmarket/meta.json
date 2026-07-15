@@ -1,0 +1,9 @@
+{
+    "name": "Satsmarket",
+    "id": "satsmarket",
+    "url": "https://satsmarket.xyz/",
+    "iconUrl": "/satsmarket.svg",
+    "description": "Lightning marketplace to buy & sell with sats, no middlemen (Indonesia)",
+    "extendedDescription": "SatsMarket is a Lightning Network-based marketplace where users can buy and sell products, services, and digital goods using sats - no banks, no middlemen, and no country restrictions. Transactions are purely peer-to-peer between buyer and seller; SatsMarket does not act as a third party in the transaction itself. Product categories include groceries, clothing, services, electronics, digital goods, food, daily necessities, books, accessories, automotive, agriculture, health, education, and arts & crafts. Sellers and buyers connect through a community group on Fedi.",
+    "keywords": ["marketplace", "lightning", "p2p", "indonesia"]
+}
