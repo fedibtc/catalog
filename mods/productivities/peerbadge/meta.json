@@ -1,0 +1,9 @@
+{
+  "name": "PeerBadge",
+  "id": "peerbadge",
+  "url": "https://app.peerbadge.org/",
+  "iconUrl": "https://app.peerbadge.org/assets/shield-BE3nIk3F.png",
+  "description": "Issue, collect, and verify trusted community badges",
+  "extendedDescription": "PeerBadge lets trusted community members issue cryptographically signed badges, recipients collect them, and anyone can verify them by scanning QR codes. Create a private identity or use an existing Nostr identity, exchange badges in person, and keep credential data on your device.",
+  "keywords": ["credentials", "badges", "identity", "trust", "verification", "Nostr", "QR codes", "community"]
+}
