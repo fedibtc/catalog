@@ -7,6 +7,9 @@ import { CountryCode, RegionCode } from "../lib/countries"
 
 const SEARCH_DEBOUNCE_MS = 500
 
+const listParam = (url: URL, key: string) =>
+    (url.searchParams.get(key) ?? "").split(",").filter(Boolean)
+
 export type MiniAppsFilterState = {
     search: string
     region: RegionCode | undefined
@@ -82,11 +85,12 @@ export function useMiniAppsFilterURLState() {
 
     const toggleCountry = useCallback(
         (countryCode: CountryCode, enabled: boolean) => {
-            const newCountries = enabled
-                ? Array.from(new Set([...urlState.countries, countryCode]))
-                : urlState.countries.filter((c) => c !== countryCode)
-
             const url = new URL(window.location.href)
+            const current = listParam(url, "countries") as Array<CountryCode>
+            const newCountries = enabled
+                ? Array.from(new Set([...current, countryCode]))
+                : current.filter((c) => c !== countryCode)
+
             if (newCountries.length > 0) {
                 url.searchParams.set("countries", newCountries.join(","))
             } else {
@@ -94,16 +98,17 @@ export function useMiniAppsFilterURLState() {
             }
             router.replace(url.pathname + url.search, { scroll: false })
         },
-        [urlState.countries, router],
+        [router],
     )
 
     const toggleCategory = useCallback(
         (categoryCode: CategoryCode, enabled: boolean) => {
-            const newCategories = enabled
-                ? Array.from(new Set([...urlState.categories, categoryCode]))
-                : urlState.categories.filter((c) => c !== categoryCode)
-
             const url = new URL(window.location.href)
+            const current = listParam(url, "categories") as Array<CategoryCode>
+            const newCategories = enabled
+                ? Array.from(new Set([...current, categoryCode]))
+                : current.filter((c) => c !== categoryCode)
+
             if (newCategories.length > 0) {
                 url.searchParams.set("categories", newCategories.join(","))
             } else {
@@ -111,7 +116,7 @@ export function useMiniAppsFilterURLState() {
             }
             router.replace(url.pathname + url.search, { scroll: false })
         },
-        [urlState.categories, router],
+        [router],
     )
 
     const resetFilters = useCallback(() => {
