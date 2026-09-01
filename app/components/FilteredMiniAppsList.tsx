@@ -36,7 +36,11 @@ const FilteredMiniAppsList = (props: FilteredMiniAppsListProps) => {
     } else {
         return (
             <Flex col gap={4} p={4} width="full" className="max-w-[1200px]">
-                <Text variant="h2" weight="medium">
+                <Text
+                    variant="h2"
+                    weight="medium"
+                    data-testid="filtered-results-heading"
+                >
                     {miniAppElements.length} Filtered{" "}
                     {pluralize(miniAppElements.length, "Result")}
                 </Text>

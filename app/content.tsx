@@ -54,9 +54,16 @@ export default function PageContent({
     }, [])
 
     const copyMiniAppUrl = (miniApp: Mod) => {
-        return navigator.clipboard.writeText(miniApp.url).then(() => {
-            toast.show("Copied to clipboard")
-        })
+        return navigator.clipboard
+            .writeText(miniApp.url)
+            .then(() => {
+                toast.show("Copied to clipboard")
+            })
+            .catch(() => {
+                toast.show(
+                    "Failed to copy to clipboard, please check that your browser has the correct permissions",
+                )
+            })
     }
 
     const installMiniApp = async (miniApp: Mod) => {
@@ -192,6 +199,7 @@ export default function PageContent({
                 >
                     <div
                         className={`${isMobile ? "h-full" : "h-[700px]"} overflow-scroll p-0!`}
+                        data-testid="mini-app-details-dialog"
                     >
                         <Icon
                             onClick={() => setMoreDetailsApp(undefined)}
@@ -199,6 +207,7 @@ export default function PageContent({
                             width={24}
                             height={24}
                             className="absolute top-4 right-4 cursor-pointer"
+                            data-testid="mini-app-details-dialog-close"
                         />
 
                         <MiniAppDetails
