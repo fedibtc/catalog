@@ -199,6 +199,33 @@ const MiniAppDetails = (props: MiniAppDetails) => {
                             ))}
                         </Flex>
                     </Flex>
+
+                    {miniApp.privacyPolicyUrl !== undefined && (
+                        <>
+                            <hr />
+
+                            <Flex col gap={2} className="my-2">
+                                <Text weight="medium" className="text-gray-600">
+                                    Privacy policy
+                                </Text>
+
+                                <a
+                                    href={miniApp.privacyPolicyUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-fit"
+                                    data-testid={`${detailsTestId}-privacy-policy`}
+                                >
+                                    <Text
+                                        variant="caption"
+                                        className="text-gray-600 underline break-all"
+                                    >
+                                        {miniApp.privacyPolicyUrl}
+                                    </Text>
+                                </a>
+                            </Flex>
+                        </>
+                    )}
                 </Flex>
             )}
         </div>

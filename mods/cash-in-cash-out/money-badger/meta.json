@@ -3,5 +3,6 @@
   "id": "moneybadger",
   "url": "https://moneybadger.dev.fedibtc.com/",
   "iconUrl": "https://moneybadger.dev.fedibtc.com/favicon.ico",
-  "description": "Pay with Bitcoin across South Africa"
+  "description": "Pay with Bitcoin across South Africa",
+  "privacyPolicyUrl": "https://www.fedi.xyz/privacy-policy"
 }
