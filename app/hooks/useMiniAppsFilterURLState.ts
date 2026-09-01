@@ -20,6 +20,24 @@ export type MiniAppsFilterState = {
 export function useMiniAppsFilterURLState() {
     const searchParams = useSearchParams()
     const router = useRouter()
+    const requestedUrlRef = useRef<string | null>(null)
+
+    useEffect(() => {
+        requestedUrlRef.current = null
+    }, [searchParams])
+
+    const currentUrl = useCallback(
+        () => new URL(requestedUrlRef.current ?? window.location.href),
+        [],
+    )
+
+    const navigate = useCallback(
+        (url: URL) => {
+            requestedUrlRef.current = url.href
+            router.replace(url.pathname + url.search, { scroll: false })
+        },
+        [router],
+    )
 
     const urlState: MiniAppsFilterState = useMemo(() => {
         const search = searchParams.get("search") ?? ""
@@ -58,34 +76,34 @@ export function useMiniAppsFilterURLState() {
             }
 
             debounceTimeoutRef.current = setTimeout(() => {
-                const url = new URL(window.location.href)
+                const url = currentUrl()
                 if (value.length > 0) {
                     url.searchParams.set("search", value)
                 } else {
                     url.searchParams.delete("search")
                 }
-                router.replace(url.pathname + url.search, { scroll: false })
+                navigate(url)
             }, SEARCH_DEBOUNCE_MS)
         },
-        [router],
+        [currentUrl, navigate],
     )
 
     const setRegion = useCallback(
         (region: RegionCode | undefined) => {
-            const url = new URL(window.location.href)
+            const url = currentUrl()
             if (region) {
                 url.searchParams.set("region", region)
             } else {
                 url.searchParams.delete("region")
             }
-            router.replace(url.pathname + url.search, { scroll: false })
+            navigate(url)
         },
-        [router],
+        [currentUrl, navigate],
     )
 
     const toggleCountry = useCallback(
         (countryCode: CountryCode, enabled: boolean) => {
-            const url = new URL(window.location.href)
+            const url = currentUrl()
             const current = listParam(url, "countries") as Array<CountryCode>
             const newCountries = enabled
                 ? Array.from(new Set([...current, countryCode]))
@@ -96,14 +114,14 @@ export function useMiniAppsFilterURLState() {
             } else {
                 url.searchParams.delete("countries")
             }
-            router.replace(url.pathname + url.search, { scroll: false })
+            navigate(url)
         },
-        [router],
+        [currentUrl, navigate],
     )
 
     const toggleCategory = useCallback(
         (categoryCode: CategoryCode, enabled: boolean) => {
-            const url = new URL(window.location.href)
+            const url = currentUrl()
             const current = listParam(url, "categories") as Array<CategoryCode>
             const newCategories = enabled
                 ? Array.from(new Set([...current, categoryCode]))
@@ -114,29 +132,29 @@ export function useMiniAppsFilterURLState() {
             } else {
                 url.searchParams.delete("categories")
             }
-            router.replace(url.pathname + url.search, { scroll: false })
+            navigate(url)
         },
-        [router],
+        [currentUrl, navigate],
     )
 
     const resetFilters = useCallback(() => {
-        const url = new URL(window.location.href)
+        const url = currentUrl()
         url.searchParams.delete("region")
         url.searchParams.delete("countries")
         url.searchParams.delete("categories")
         // Keep search when resetting filters
-        router.replace(url.pathname + url.search, { scroll: false })
-    }, [router])
+        navigate(url)
+    }, [currentUrl, navigate])
 
     const resetAll = useCallback(() => {
         setSearchInput("")
-        const url = new URL(window.location.href)
+        const url = currentUrl()
         url.searchParams.delete("search")
         url.searchParams.delete("region")
         url.searchParams.delete("countries")
         url.searchParams.delete("categories")
-        router.replace(url.pathname + url.search, { scroll: false })
-    }, [router])
+        navigate(url)
+    }, [currentUrl, navigate])
 
     // Cleanup timeout on unmount
     useEffect(() => {
