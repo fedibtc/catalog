@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test"
 
 const isCI = !!process.env.CI
+const deployedUrl = process.env.E2E_BASE_URL
 
 export default defineConfig({
     testDir: "./e2e",
@@ -10,7 +11,7 @@ export default defineConfig({
     workers: isCI ? 1 : undefined,
     reporter: "html",
     use: {
-        baseURL: "http://localhost:3023",
+        baseURL: deployedUrl ?? "http://localhost:3023",
         trace: "on-first-retry",
         navigationTimeout: 15_000,
     },
@@ -20,10 +21,12 @@ export default defineConfig({
             use: { ...devices["Desktop Chrome"] },
         },
     ],
-    webServer: {
-        command: "bun run build && bunx next start -p 3023",
-        url: "http://localhost:3023",
-        reuseExistingServer: !isCI,
-        timeout: 120_000,
-    },
+    webServer: deployedUrl
+        ? undefined
+        : {
+              command: "bun run build && bunx next start -p 3023",
+              url: "http://localhost:3023",
+              reuseExistingServer: !isCI,
+              timeout: 120_000,
+          },
 })
