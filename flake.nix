@@ -15,7 +15,6 @@
         devShells.default = pkgs.mkShell {
           buildInputs = [
             pkgs.bun
-            pkgs.yarn
             pkgs.git
           ];
 
