@@ -14,7 +14,7 @@ test.describe("Browser Mode - URL-based Filtering", () => {
         await catalogPage.getSearchInput().fill("Boltz")
 
         // Wait for the 500ms debounce to update the URL
-        await page.waitForURL(/[?&]search=Boltz/, { timeout: 15_000 })
+        await expect(page).toHaveURL(/[?&]search=Boltz/, { timeout: 15_000 })
         expect(page.url()).toContain("search=Boltz")
     })
 
@@ -151,9 +151,7 @@ test.describe("Browser Mode - URL-based Filtering", () => {
         await catalogPage.getSearchInput().fill("")
 
         // Wait for debounce to clear the URL param
-        await page.waitForURL((url) => !url.searchParams.has("search"), {
-            timeout: 15_000,
-        })
+        await expect(page).not.toHaveURL(/[?&]search=/, { timeout: 15_000 })
         expect(page.url()).not.toContain("search=")
     })
 
@@ -171,8 +169,8 @@ test.describe("Browser Mode - URL-based Filtering", () => {
         await catalogPage.closeFilterModal()
 
         // Search should still be in URL, category should be gone
-        expect(page.url()).toContain("search=bitcoin")
-        expect(page.url()).not.toContain("categories=")
+        await expect(page).not.toHaveURL(/categories=/)
+        await expect(page).toHaveURL(/[?&]search=bitcoin/)
     })
 
     test("multiple categories in URL are comma-separated", async ({

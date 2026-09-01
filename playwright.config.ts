@@ -10,6 +10,7 @@ export default defineConfig({
     retries: isCI ? 1 : 0,
     workers: isCI ? 1 : undefined,
     reporter: "html",
+    expect: { timeout: 10_000 },
     use: {
         baseURL: deployedUrl ?? "http://localhost:3023",
         trace: "on-first-retry",
