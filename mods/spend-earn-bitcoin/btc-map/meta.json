@@ -3,5 +3,6 @@
   "id": "btc-map",
   "url": "https://btcmap.org/map",
   "iconUrl": "https://btcmap.org/images/logo.svg",
-  "description": "Locate merchants in your area that accept payment in bitcoin."
+  "description": "Locate merchants in your area that accept payment in bitcoin.",
+  "privacyPolicyUrl": "https://btcmap.org/privacy-policy"
 }

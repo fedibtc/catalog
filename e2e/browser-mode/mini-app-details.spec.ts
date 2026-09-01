@@ -21,7 +21,9 @@ test.describe("Browser Mode - Details Modal", () => {
         ).toBeVisible()
         await expect(dialog.locator("img[alt='Boltz']")).toBeVisible()
         await expect(dialog.locator("img[width='96']")).toBeVisible()
-        await expect(dialog.getByText("https://boltz.exchange/")).toBeVisible()
+        await expect(
+            dialog.getByText("https://boltz.exchange/", { exact: true }),
+        ).toBeVisible()
     })
 
     test("QR code button shows QR view", async ({ catalogPage }) => {
@@ -51,7 +53,9 @@ test.describe("Browser Mode - Details Modal", () => {
             .getByTestId(`${miniAppTestId("Boltz")}-details-qr-close`)
             .click()
 
-        await expect(dialog.getByText("https://boltz.exchange/")).toBeVisible()
+        await expect(
+            dialog.getByText("https://boltz.exchange/", { exact: true }),
+        ).toBeVisible()
     })
 
     test("category badge displayed", async ({ catalogPage }) => {
@@ -70,6 +74,39 @@ test.describe("Browser Mode - Details Modal", () => {
         const dialog = catalogPage.getDetailsDialog()
         await expect(dialog.getByText("Keywords")).toBeVisible()
         await expect(dialog.getByText("bitcoin explorer")).toBeVisible()
+    })
+
+    test("privacy policy link displayed when the mini app has one", async ({
+        catalogPage,
+    }) => {
+        await catalogPage.waitForCatalogReady()
+        await catalogPage.clickMiniAppCard("Boltz")
+
+        const dialog = catalogPage.getDetailsDialog()
+        await expect(dialog.getByText("Privacy policy")).toBeVisible()
+        const link = dialog.getByTestId(
+            `${miniAppTestId("Boltz")}-details-privacy-policy`,
+        )
+        await expect(link).toHaveAttribute(
+            "href",
+            "https://boltz.exchange/privacy",
+        )
+        await expect(link).toHaveAttribute("target", "_blank")
+    })
+
+    test("privacy policy falls back to <origin>/privacy-policy when the mini app declares none", async ({
+        catalogPage,
+    }) => {
+        await catalogPage.waitForCatalogReady()
+        await catalogPage.clickMiniAppCard("bitsimp")
+
+        const dialog = catalogPage.getDetailsDialog()
+        await expect(dialog.getByText("Privacy policy")).toBeVisible()
+        await expect(
+            dialog.getByTestId(
+                `${miniAppTestId("bitsimp")}-details-privacy-policy`,
+            ),
+        ).toHaveAttribute("href", "https://bitsimp.com/privacy-policy")
     })
 
     test("View more/View less toggles extended description", async ({
