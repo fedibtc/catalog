@@ -3,5 +3,6 @@
   "id": "satlantis",
   "url": "https://www.satlantis.io/place",
   "iconUrl": "https://www.satlantis.io/android-chrome-512x512.png",
-  "description": "Find, compare, join, build local communities on a Bitcoin standard"
+  "description": "Find, compare, join, build local communities on a Bitcoin standard",
+  "privacyPolicyUrl": "https://www.satlantis.io/privacy-policy"
 }
