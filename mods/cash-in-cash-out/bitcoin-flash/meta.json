@@ -3,5 +3,6 @@
   "id": "bitcoinflash",
   "url": "https://bitcoinflash.xyz/",
   "iconUrl": "https://res.cloudinary.com/dh8zagphf/image/upload/v1766505075/FlashIcon.png",
-  "description": "Flash helps you Send, Receive and Pay with Bitcoin, instantly, anywhere in Africa"
+  "description": "Flash helps you Send, Receive and Pay with Bitcoin, instantly, anywhere in Africa",
+  "privacyPolicyUrl": "https://bitcoinflash.xyz/privacy-policy"
 }

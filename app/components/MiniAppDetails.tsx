@@ -2,6 +2,7 @@ import { Button, Icon, Text } from "@fedibtc/ui"
 import { useEffect, useState } from "react"
 import QRCode from "react-qr-code"
 import { categoriesByCode } from "../lib/categories"
+import privacyPolicyUrl from "../lib/privacyPolicyUrl"
 import { Mod } from "../lib/schemas"
 import Flex from "./flex"
 import { useViewport } from "./viewport-provider"
@@ -183,6 +184,28 @@ const MiniAppDetails = (props: MiniAppDetails) => {
                                 />
                             ))}
                         </Flex>
+                    </Flex>
+
+                    <hr />
+
+                    <Flex col gap={2} className="my-2">
+                        <Text weight="medium" className="text-gray-600">
+                            Privacy policy
+                        </Text>
+
+                        <a
+                            href={privacyPolicyUrl(miniApp)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-fit"
+                        >
+                            <Text
+                                variant="caption"
+                                className="text-gray-600 underline break-all"
+                            >
+                                {privacyPolicyUrl(miniApp)}
+                            </Text>
+                        </a>
                     </Flex>
                 </Flex>
             )}
