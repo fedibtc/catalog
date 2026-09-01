@@ -3,5 +3,6 @@
   "id": "hivetalk",
   "url": "https://hivetalk.org/active",
   "iconUrl": "/asset-23.png",
-  "description": "Video messaging, screen sharing and more"
+  "description": "Video messaging, screen sharing and more",
+  "privacyPolicyUrl": "https://hivetalk.org/privacy"
 }

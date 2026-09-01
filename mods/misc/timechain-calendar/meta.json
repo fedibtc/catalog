@@ -5,5 +5,6 @@
     "iconUrl": "https://timechaincalendar.com/icon-tc-512.png",
     "description": "An app to understand Bitcoin. A protocol visualizer, explorer, and real-time data dashboard.",
     "extendedDescription": "this mini app provides detailed information about the block height, tx fees, hash rate, price, etc.",
+    "privacyPolicyUrl": "https://timechaincalendar.com/en/privacy",
     "keywords": ["bitcoin explorer"]
 }

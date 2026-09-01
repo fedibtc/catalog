@@ -3,5 +3,6 @@
   "id": "nadanada",
   "url": "https://nadanada.me/",
   "iconUrl": "https://nadanada.me/icon.svg",
-  "description": "Instant anonymous VPN and eSIM service"
+  "description": "Instant anonymous VPN and eSIM service",
+  "privacyPolicyUrl": "https://nadanada.me/privacy"
 }

@@ -3,5 +3,6 @@
   "id": "bitzed",
   "url": "https://app.bitzed.xyz",
   "iconUrl": "https://bitzed.xyz/logo.png",
-  "description": "Bitzed makes it easy to buy and spend Bitcoin using mobile money in Zambia, powered by the Lightning Network for instant, low-cost transactions."
+  "description": "Bitzed makes it easy to buy and spend Bitcoin using mobile money in Zambia, powered by the Lightning Network for instant, low-cost transactions.",
+  "privacyPolicyUrl": "https://bitzed.xyz/privacy-policy.html"
 }
