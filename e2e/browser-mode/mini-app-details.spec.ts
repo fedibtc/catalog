@@ -94,15 +94,19 @@ test.describe("Browser Mode - Details Modal", () => {
         await expect(link).toHaveAttribute("target", "_blank")
     })
 
-    test("no privacy policy row when the mini app has none", async ({
+    test("privacy policy falls back to <origin>/privacy-policy when the mini app declares none", async ({
         catalogPage,
     }) => {
         await catalogPage.waitForCatalogReady()
         await catalogPage.clickMiniAppCard("bitsimp")
 
         const dialog = catalogPage.getDetailsDialog()
-        await expect(dialog.getByText("Keywords")).toBeVisible()
-        await expect(dialog.getByText("Privacy policy")).not.toBeVisible()
+        await expect(dialog.getByText("Privacy policy")).toBeVisible()
+        await expect(
+            dialog.getByTestId(
+                `${miniAppTestId("bitsimp")}-details-privacy-policy`,
+            ),
+        ).toHaveAttribute("href", "https://bitsimp.com/privacy-policy")
     })
 
     test("View more/View less toggles extended description", async ({

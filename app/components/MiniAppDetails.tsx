@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import QRCode from "react-qr-code"
 import { miniAppTestId } from "../../e2e/helpers/test-ids"
 import { categoriesByCode } from "../lib/categories"
+import privacyPolicyUrl from "../lib/privacyPolicyUrl"
 import { Mod } from "../lib/schemas"
 import Flex from "./flex"
 import { useViewport } from "./viewport-provider"
@@ -200,32 +201,28 @@ const MiniAppDetails = (props: MiniAppDetails) => {
                         </Flex>
                     </Flex>
 
-                    {miniApp.privacyPolicyUrl !== undefined && (
-                        <>
-                            <hr />
+                    <hr />
 
-                            <Flex col gap={2} className="my-2">
-                                <Text weight="medium" className="text-gray-600">
-                                    Privacy policy
-                                </Text>
+                    <Flex col gap={2} className="my-2">
+                        <Text weight="medium" className="text-gray-600">
+                            Privacy policy
+                        </Text>
 
-                                <a
-                                    href={miniApp.privacyPolicyUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="w-fit"
-                                    data-testid={`${detailsTestId}-privacy-policy`}
-                                >
-                                    <Text
-                                        variant="caption"
-                                        className="text-gray-600 underline break-all"
-                                    >
-                                        {miniApp.privacyPolicyUrl}
-                                    </Text>
-                                </a>
-                            </Flex>
-                        </>
-                    )}
+                        <a
+                            href={privacyPolicyUrl(miniApp)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-fit"
+                            data-testid={`${detailsTestId}-privacy-policy`}
+                        >
+                            <Text
+                                variant="caption"
+                                className="text-gray-600 underline break-all"
+                            >
+                                {privacyPolicyUrl(miniApp)}
+                            </Text>
+                        </a>
+                    </Flex>
                 </Flex>
             )}
         </div>
