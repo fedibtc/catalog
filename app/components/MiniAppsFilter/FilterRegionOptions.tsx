@@ -3,6 +3,7 @@ import {
     regionCodes,
     regionsByRegionCode,
 } from "@/app/lib/countries"
+import { filterOptionTestId } from "@/e2e/helpers/test-ids"
 import { Button, Text } from "@fedibtc/ui"
 import Flex from "../flex"
 
@@ -46,6 +47,7 @@ const FilterRegionOptions = (props: FilterRegionOptionsProps) => {
                 size="sm"
                 className={`${isSelected ? "bg-gray-500 text-white" : "bg-gray-100"}`}
                 onClick={() => handleRegionCodeClick(regionCode)}
+                data-testid={filterOptionTestId("region", regionName)}
             >
                 <Text className="text-nowrap font-bold">{regionName}</Text>
             </Button>

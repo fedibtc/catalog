@@ -1,4 +1,5 @@
 import { categoriesByCode, CategoryCode } from "@/app/lib/categories"
+import { filterOptionTestId } from "@/e2e/helpers/test-ids"
 import { Checkbox, Text } from "@fedibtc/ui"
 import Flex from "../flex"
 
@@ -33,6 +34,7 @@ const FilterCategoryOptions = (props: FilterCategoryOptionsProps) => {
                 onClick={() =>
                     onCategoryCodeSelectedChange(categoryCode, !isSelected)
                 }
+                data-testid={filterOptionTestId("category", categoryName)}
             >
                 <Checkbox checked={isSelected} />
 

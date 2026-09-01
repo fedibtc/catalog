@@ -2,6 +2,7 @@ import { Button, Dialog, Icon, Text } from "@fedibtc/ui"
 import { useState } from "react"
 import QRCode from "react-qr-code"
 import { styled } from "react-tailwind-variants"
+import { miniAppTestId } from "../../e2e/helpers/test-ids"
 import { Mod } from "../lib/schemas"
 import Flex from "./flex"
 import { useViewport } from "./viewport-provider"
@@ -87,9 +88,15 @@ export default function CatalogItem({
         </Flex>
     )
 
+    const cardTestId = miniAppTestId(content.name)
+
     return (
         <>
-            <Container onClick={onShowMore} className="p-2">
+            <Container
+                onClick={onShowMore}
+                className="p-2"
+                data-testid={cardTestId}
+            >
                 <Flex grow align="center" gap={2}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -98,6 +105,7 @@ export default function CatalogItem({
                         height={64}
                         alt={content.name}
                         className="rounded-lg self-start border border-extraLightGrey w-16 h-16 shrink-0"
+                        data-testid={`${cardTestId}-icon`}
                     />
                     <Flex col gap={1} grow>
                         <Text weight="medium">
@@ -119,6 +127,7 @@ export default function CatalogItem({
                             className="rounded-full h-4 w-4 p-4"
                             variant="secondary"
                             onClick={handleCopy}
+                            data-testid={`${cardTestId}-copy`}
                         >
                             <Icon
                                 icon="IconCopy"
@@ -133,6 +142,7 @@ export default function CatalogItem({
                                 loading={isPerformingAction}
                                 variant="secondary"
                                 onClick={handleAction}
+                                data-testid={`${cardTestId}-${isInstalled ? "added" : "add"}`}
                             >
                                 {isInstalled ? "Added" : "Add"}
                             </Button>
