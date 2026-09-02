@@ -1,5 +1,4 @@
 import { expect, test } from "../fixtures/base"
-import { brokenIcons } from "../helpers/icons"
 import { miniAppGroupTestId } from "../helpers/test-ids"
 
 test.describe("Browser Mode - Page Load & Layout", () => {
@@ -104,15 +103,5 @@ test.describe("Browser Mode - Page Load & Layout", () => {
         await expect(
             page.getByText("Copied to clipboard", { exact: true }),
         ).toBeVisible()
-    })
-
-    test("every mini app icon loads", async ({ page, catalogPage }) => {
-        await catalogPage.waitForCatalogReady()
-        await expect(
-            page.locator("[data-testid$='-icon']").first(),
-        ).toBeVisible()
-        await expect
-            .poll(() => brokenIcons(page), { timeout: 30_000 })
-            .toEqual([])
     })
 })

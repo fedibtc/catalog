@@ -2,6 +2,6 @@
   "name": "CornyChat",
   "id": "cornychat",
   "url": "https://cornychat.com",
-  "iconUrl": "/icons/cornychat.png",
+  "iconUrl": "https://i.nostr.build/o7jx.png",
   "description": "Live audio space run on Nostr"
 }

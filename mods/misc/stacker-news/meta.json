@@ -2,7 +2,7 @@
   "name": "Stacker News",
   "id": "stacker-news",
   "url": "https://stacker.news",
-  "iconUrl": "/icons/stacker-news.png",
+  "iconUrl": "https://stacker.news/icons/icon_x512.png",
   "description": "Read the latest updates and earn bitcoin for creating or curating content.",
   "privacyPolicyUrl": "https://stacker.news/privacy"
 }

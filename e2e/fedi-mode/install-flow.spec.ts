@@ -110,16 +110,14 @@ test.describe("Fedi Mode - Install Flow", () => {
         await page.goto("/", { waitUntil: "domcontentloaded" })
         await catalogPage.waitForCatalogReady()
 
-        const boltzCard = catalogPage.getMiniAppCard("Boltz")
-        await boltzCard
-            .getByRole("button", { name: "Add", exact: true })
-            .click()
+        const card = catalogPage.getMiniAppCard("Sats Converter")
+        await card.getByRole("button", { name: "Add", exact: true }).click()
         await expect(
-            boltzCard.getByRole("button", { name: "Added", exact: true }),
+            card.getByRole("button", { name: "Added", exact: true }),
         ).toBeVisible()
 
         const [call] = await getInstallCalls(page)
         expect(call.imageUrl).toMatch(/^https?:\/\//)
-        expect(new URL(call.imageUrl).pathname).toBe("/icons/boltz.png")
+        expect(new URL(call.imageUrl).pathname).toBe("/satsconverter.png")
     })
 })

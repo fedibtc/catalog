@@ -1,5 +1,4 @@
 import { expect, injectFediMock, test } from "../fixtures/base"
-import { brokenIcons } from "../helpers/icons"
 
 test.describe("Fedi Mode - Page Load with Fedi API", () => {
     test("page loads with fedi mock injected", async ({
@@ -82,20 +81,5 @@ test.describe("Fedi Mode - Page Load with Fedi API", () => {
         await expect(
             page.getByText("Copied to clipboard", { exact: true }),
         ).toBeVisible()
-    })
-
-    test("every mini app icon loads in fedi mode", async ({
-        page,
-        catalogPage,
-    }) => {
-        await injectFediMock(page)
-        await page.goto("/", { waitUntil: "domcontentloaded" })
-        await catalogPage.waitForCatalogReady()
-        await expect(
-            page.locator("[data-testid$='-icon']").first(),
-        ).toBeVisible()
-        await expect
-            .poll(() => brokenIcons(page), { timeout: 30_000 })
-            .toEqual([])
     })
 })

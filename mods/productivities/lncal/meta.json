@@ -2,7 +2,7 @@
   "name": "LNCal",
   "id": "lncal",
   "url": "https://lncal.com/login",
-  "iconUrl": "/icons/lncal.png",
+  "iconUrl": "https://lncal.com/favicon.png",
   "description": "Book an appointment, paid in Bitcoin",
   "privacyPolicyUrl": "https://lncal.com/privacy"
 }
