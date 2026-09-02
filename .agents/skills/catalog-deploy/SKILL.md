@@ -5,7 +5,7 @@ description: How to add or change a mod in fedibtc/catalog and how to deploy mas
 
 # Catalog PRs and deploys
 
-Two branches. `master` is the source of truth and deploys to the Vercel `staging` environment on every push. `vercel/production` serves https://fedi-catalog.vercel.app and only ever advances by merging master.
+Two branches. `master` is the source of truth and deploys to the Vercel `staging` environment on every push. `vercel/production` serves https://fedi-catalog.vercel.app and only ever advances by merging master. Merging that PR is the production deploy and a human does it on GitHub. An agent opens the PR and never merges it, not with `gh pr merge`, not with `--admin`, and never pushes to vercel/production directly.
 
 ## Adding or changing a mod
 
@@ -31,13 +31,9 @@ Two branches. `master` is the source of truth and deploys to the Vercel `staging
    gh pr create --base vercel/production --head master --title "build: deploy master to production"
    ```
 
-3. merge it with a merge commit, never squash or rebase, and never cherry-pick into vercel/production. each of those creates a commit master does not have, the branches stop sharing history, and the next deploy conflicts on every file touched since. production needs one approval from someone other than the last pusher, or an admin merge:
+3. wait for its checks, then hand over the link. a human merges it on GitHub with a merge commit, never squash or rebase, and never cherry-pick into vercel/production. each of those creates a commit master does not have, the branches stop sharing history, and the next deploy conflicts on every file touched since. production needs one approval from someone other than the last pusher, or the admin bypass in the merge dialog
 
-   ```
-   gh pr merge <n> --merge --admin
-   ```
-
-4. confirm the deploy the same way as staging, with `environment=Production` and https://fedi-catalog.vercel.app as the target
+4. once it is merged, confirm the deploy the same way as staging, with `environment=Production` and https://fedi-catalog.vercel.app as the target
 
 ## Lockfile and dependabot
 
