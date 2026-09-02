@@ -17,6 +17,22 @@ jobs:
             - name: Run code quality checks
               run: nix develop -c ./scripts/check-ui-code.sh
 
+    mod-icons:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - uses: cachix/install-nix-action@v30
+              with:
+                  nix_path: nixpkgs=channel:nixos-25.05
+
+            - name: Check the icons of mods added in this PR
+              run: nix develop -c ./scripts/check-new-mod-icons.sh ${{ github.event.pull_request.base.sha }}
+
     e2e:
         runs-on: ubuntu-latest
 
