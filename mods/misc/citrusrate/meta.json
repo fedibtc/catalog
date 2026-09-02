@@ -2,7 +2,7 @@
   "name": "Citrusrate",
   "id": "citrusrate",
   "url": "https://citrusrate.com",
-  "iconUrl": "https://citrusrate.com/favicon.ico",
+  "iconUrl": "/icons/citrusrate.png",
   "description": "Bitcoin price data tracker for all major African currencies",
   "privacyPolicyUrl": "https://citrusrate.com/privacy-policy"
 }

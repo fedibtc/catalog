@@ -2,7 +2,7 @@
   "name": "Swap",
   "id": "swap",
   "url": "https://fedi-swap.vercel.app",
-  "iconUrl": "https://fedi-swap.vercel.app/logo.png",
+  "iconUrl": "/icons/swap.png",
   "description": "Swap BTC, ETH, USDC, USDT via Lightning Network.",
   "privacyPolicyUrl": "https://www.fedi.xyz/privacy-policy"
 }

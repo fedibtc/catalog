@@ -2,7 +2,7 @@
   "name": "Tando",
   "id": "tando",
   "url": "https://use.tando.me",
-  "iconUrl": "https://use.tando.me/icons/Icon-512.png",
+  "iconUrl": "/icons/tando.png",
   "description": "Make Mpesa payments with bitcoin for Kenya🇰🇪",
   "privacyPolicyUrl": "https://tando.me/privacy.htm"
 }

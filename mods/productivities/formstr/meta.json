@@ -2,7 +2,7 @@
   "name": "Formstr",
   "id": "formstr",
   "url": "https://formstr.app/",
-  "iconUrl": "https://formstr.app/favicon.ico",
+  "iconUrl": "/icons/formstr.png",
   "description": "A decentralized forms application which lets you custody your own data.",
   "privacyPolicyUrl": "https://about.formstr.app/privacy-policy"
 }

@@ -2,7 +2,7 @@
     "name": "WeIB team",
     "id": "weib-team",
     "url": "https://wel-b.net/",
-    "iconUrl": "https://wel-b.net/favicon.ico",
+    "iconUrl": "/icons/weib-team.png",
     "description": "Find Bitcoin businesses across Thailand. Connect and share experience.",
     "extendedDescription": "WelB helps grow the Bitcoin economy in Thailand by connecting people, businesses, and communities. Find places that accept Bitcoin, learn how to use Bitcoin and the Lightning Network, discover local events, and share your experiences. We support merchant onboarding, education, BTCmap contributions, and community initiatives to make Bitcoin a practical medium of exchange for everyday transactions.",
     "supportedCountryCodes": [],
