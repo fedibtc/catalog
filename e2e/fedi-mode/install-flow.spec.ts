@@ -1,4 +1,5 @@
 import { expect, injectFediMock, test } from "../fixtures/base"
+import { getInstallCalls } from "../helpers/fedi-mock"
 
 test.describe("Fedi Mode - Install Flow", () => {
     test("click Add on card changes to Added", async ({
@@ -99,5 +100,26 @@ test.describe("Fedi Mode - Install Flow", () => {
         await expect(
             boltzCard.getByRole("button", { name: "Added", exact: true }),
         ).toBeVisible()
+    })
+
+    test("install hands the app an absolute icon url", async ({
+        page,
+        catalogPage,
+    }) => {
+        await injectFediMock(page)
+        await page.goto("/", { waitUntil: "domcontentloaded" })
+        await catalogPage.waitForCatalogReady()
+
+        const boltzCard = catalogPage.getMiniAppCard("Boltz")
+        await boltzCard
+            .getByRole("button", { name: "Add", exact: true })
+            .click()
+        await expect(
+            boltzCard.getByRole("button", { name: "Added", exact: true }),
+        ).toBeVisible()
+
+        const [call] = await getInstallCalls(page)
+        expect(call.imageUrl).toMatch(/^https?:\/\//)
+        expect(new URL(call.imageUrl).pathname).toBe("/icons/boltz.png")
     })
 })

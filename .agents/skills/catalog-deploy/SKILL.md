@@ -11,6 +11,7 @@ Two branches. `master` is the source of truth and deploys to the Vercel `staging
 
 - one PR per mod into master, from a branch off master. never open a second PR into vercel/production
 - the mod lives at `mods/<category>/<id>/meta.json` and must pass the zod schema in `app/lib/schemas.ts`. a mod that fails the schema is silently dropped from the catalog, so check the Vercel preview of the PR before asking for review
+- the icon is a file in `public/icons/<id>.png`, a 256px square png, and `iconUrl` is its path, `/icons/<id>.png`. never point `iconUrl` at the mod's own site: hosts 404 their favicons, rate limit, or block cross-origin embeds, and the e2e suite fails on any card icon that does not decode
 - `newMods.json` is a sliding window of six ids, oldest first. drop the first entry and append the new id. sibling PRs cut from the same base all conflict on this file, so merge them in the order they were opened and merge master into the next one after each merge
 - master needs no approvals. a merge commit or a squash are both fine on master
 
@@ -44,4 +45,4 @@ The project uses bun. `bun.lock` is the only lockfile and dependabot runs on the
 
 ## Running the e2e suite
 
-`nix develop -c bun test:e2e` builds and serves the app locally. `E2E_BASE_URL=<url>` runs the same suite against a deployed url without building. Against a deployed url a url-filtering test can flake, because third-party mod icons load slowly and a few tests race them. A retry that passes is fine, a repeat failure is not.
+`nix develop -c bun test:e2e` builds and serves the app locally on port 3023, and reuses whatever already listens there, so check the port is free first. `E2E_BASE_URL=<url>` runs the same suite against a deployed url without building. On a cold deployment the first page load can exceed the navigation timeout. A retry that passes is fine, a repeat failure is not.

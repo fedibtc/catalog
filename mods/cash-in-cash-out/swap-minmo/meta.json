@@ -2,7 +2,7 @@
   "name": "Swap.Minmo",
   "id": "swap.minmo",
   "url": "https://swap.minmo.to/",
-  "iconUrl": "https://swap.minmo.to/favicon.ico",
+  "iconUrl": "/icons/swap.minmo.png",
   "description": "swap.minmo lets you easily exchange Kenya Shillings (KES) for Bitcoin (sats) right inside the app",
   "privacyPolicyUrl": "https://minmo.to/privacy"
 }

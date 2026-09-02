@@ -2,7 +2,7 @@
   "name": "The Bitcoin Company",
   "id": "the-bitcoin-company",
   "url": "https://embed.thebitcoincompany.com/giftcard",
-  "iconUrl": "https://embed.thebitcoincompany.com/favicon.ico",
+  "iconUrl": "/icons/the-bitcoin-company.png",
   "description": "Shopping and exchange bitcoin for Visa and gift cards.",
   "privacyPolicyUrl": "https://thebitcoincompany.com/privacy.html"
 }

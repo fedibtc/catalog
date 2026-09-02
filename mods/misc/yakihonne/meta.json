@@ -2,7 +2,7 @@
   "name": "Yakihonne",
   "id": "yakihonne",
   "url": "https://yakihonne.com/",
-  "iconUrl": "https://yakihonne.com/favicon.ico",
+  "iconUrl": "/icons/yakihonne.png",
   "description": "Nostr-based decentralized content media protocol.",
   "privacyPolicyUrl": "https://yakihonne.com/privacy"
 }

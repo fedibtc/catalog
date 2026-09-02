@@ -76,7 +76,7 @@ export default function PageContent({
                 id: miniApp.id,
                 title: miniApp.name,
                 url: miniApp.url,
-                imageUrl: miniApp.iconUrl,
+                imageUrl: new URL(miniApp.iconUrl, window.location.href).href,
                 description: miniApp.description,
             })
 

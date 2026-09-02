@@ -2,6 +2,6 @@
   "name": "LNESIM",
   "id": "lnesim",
   "url": "https://www.lnesim.com/",
-  "iconUrl": "https://www.lnesim.com/favicon.ico",
+  "iconUrl": "/icons/lnesim.png",
   "description": "Instantly buy travel eSIM with Bitcoin Lightning Network"
 }
