@@ -2,7 +2,7 @@
   "name": "Bitspenda",
   "id": "bitspenda",
   "url": "https://send.bitspenda.app",
-  "iconUrl": "/icons/bitspenda.png",
+  "iconUrl": "https://send.bitspenda.app/logo.png",
   "description": "Spend Bitcoin seamlessly with instant mobile money payouts in Ghana, Kenya and Nigeria.",
   "privacyPolicyUrl": "https://www.bitspenda.app/privacy"
 }

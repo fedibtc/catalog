@@ -2,7 +2,7 @@
   "name": "NadaNada (lnvpn)",
   "id": "nadanada",
   "url": "https://nadanada.me/",
-  "iconUrl": "/icons/nadanada.png",
+  "iconUrl": "https://nadanada.me/icon.svg",
   "description": "Instant anonymous VPN and eSIM service",
   "privacyPolicyUrl": "https://nadanada.me/privacy"
 }

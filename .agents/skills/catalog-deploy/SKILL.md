@@ -11,7 +11,8 @@ Two branches. `master` is the source of truth and deploys to the Vercel `staging
 
 - one PR per mod into master, from a branch off master. never open a second PR into vercel/production
 - the mod lives at `mods/<category>/<id>/meta.json` and must pass the zod schema in `app/lib/schemas.ts`. a mod that fails the schema is silently dropped from the catalog, so check the Vercel preview of the PR before asking for review
-- the icon is a file in `public/icons/<id>.png`, a 256px square png, and `iconUrl` is its path, `/icons/<id>.png`. never point `iconUrl` at the mod's own site: hosts 404 their favicons, rate limit, or block cross-origin embeds, and the e2e suite fails on any card icon that does not decode
+- `iconUrl` is a url on the mod's own site. do not copy the image into this repo. pick one a browser can embed from another origin, a favicon or apple touch icon usually works, and check it renders on the Vercel preview. a host that blocks cross-origin embeds with `cross-origin-resource-policy` serves the file fine to curl and still shows a blank card, so trust the preview over a status code
+- the e2e suite fails on any card icon that does not decode and names the mod. a red icon check means a mod's host changed or died, so fix that mod's url or take the mod out
 - `newMods.json` is a sliding window of six ids, oldest first. drop the first entry and append the new id. sibling PRs cut from the same base all conflict on this file, so merge them in the order they were opened and merge master into the next one after each merge
 - master needs no approvals. a merge commit or a squash are both fine on master
 

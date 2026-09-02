@@ -2,7 +2,7 @@
     "name": "Bitcoin Interactive Website Thailand",
     "id": "bitcoin-interactive-website-thailand",
     "url": "https://learning.chontit.win",
-    "iconUrl": "/icons/bitcoin-interactive-website-thailand.png",
+    "iconUrl": "https://learning.chontit.win/main-logo.png",
     "description": "Interactive Bitcoin-only education — learn, simulate, self-custody for Thai.",
     "extendedDescription": "A self-directed, Bitcoin-only learning platform covering protocol fundamentals, cryptography, and market tools — from Bitcoin 101 and mining simulators to BIP-39, HD wallets, ECDSA, and the Lightning Network. Includes practical modules for trading position sizing, loan/DCA planning, and self-custody security. Currently available in Thai.",
     "supportedCountryCodes": [],
