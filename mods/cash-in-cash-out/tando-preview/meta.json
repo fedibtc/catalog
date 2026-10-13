@@ -1,0 +1,9 @@
+{
+    "name": "Tando (preview)",
+    "id": "tando-preview",
+    "url": "https://preview.tando.me/",
+    "iconUrl": "https://preview.tando.me/icons/Icon-maskable-512.png",
+    "description": "Spend bitcoin anywhere in Kenya with M-Pesa",
+    "supportedCountryCodes": ["KE"],
+    "keywords": []
+}
