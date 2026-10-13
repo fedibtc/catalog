@@ -1,0 +1,10 @@
+{
+    "name": "PagCoin | P2P Calculator",
+    "id": "pagcoin-p2p-calculator",
+    "url": "https://info.pagcoin.org/pages/calculadoras/calculadoras.html",
+    "iconUrl": "https://avatars.githubusercontent.com/u/167659900?v=4",
+    "description": "Convert currencies and calculate how much to send in a P2P transaction.",
+    "extendedDescription": "PagCoin is a Bitcoin platform available in Portuguese, English, and Spanish, offering tools to enable users to calculate costs related to P2P transactions and convert currencies (BTC, Real, Dollar, Euro, Sats) to facilitate the user experience within the ecosystem.",
+    "supportedCountryCodes": [],
+    "keywords": []
+}
