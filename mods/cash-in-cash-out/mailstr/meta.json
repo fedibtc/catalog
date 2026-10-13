@@ -1,0 +1,10 @@
+{
+    "name": "Mailstr",
+    "id": "mailstr",
+    "url": "https://mailstr.app/",
+    "iconUrl": "https://mailstr.app/favicon.svg",
+    "description": "Get email locked to your nostr key.",
+    "extendedDescription": "Mailstr.app is a private email service built around your own nostr key.\n\nEmails sent to your @mailstr.app address are encrypted and stored on the relays you choose, giving you more control over where your messages are kept. Instead of creating a traditional account with a username and password, you sign in using your own key.\n\nThis means your identity and access are tied directly to the key you control, while your email remains encrypted and distributed across your selected relays. Mailstr.app is designed for users who want a more private, user-controlled approach to email without relying on a centralized provider to manage their account and message storage.",
+    "supportedCountryCodes": [],
+    "keywords": []
+}
