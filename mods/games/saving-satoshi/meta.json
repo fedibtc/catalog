@@ -1,0 +1,10 @@
+{
+    "name": "Saving Satoshi",
+    "id": "saving-satoshi",
+    "url": "https://savingsatoshi.com/",
+    "iconUrl": "https://savingsatoshi.com/favicon.svg",
+    "description": "Open-source, interactive fiction game that teaches developers the technical fundamentals of Bitcoin.",
+    "extendedDescription": "Saving Satoshi bridges the gap between science fiction and technical education. \n\nThe platform places players in a narrative quest to discover the identity of Bitcoin's creator, Satoshi Nakamoto. To progress through the story, users must solve practical, code-based puzzles directly related to how the Bitcoin network functions.\n\nThe website is designed for developers who are new to the ecosystem but understand programming basics. \n\nIt allows players to write and test code using either Python or JavaScript to master core cryptographic concepts, including:\n\n- Digital Signatures: Understanding public/private key pairs and cryptographic verification.\n\n- Hashing Algorithms: Learning how SHA-256 secures blocks and transaction data.\n\n- Transaction Mechanics: Building, parsing, and signing Bitcoin transactions from scratch.\n\nBecause the entire project is open-source, it serves a dual educational purpose: users can learn by playing the game, or they can contribute directly to its codebase on GitHub to improve the lessons for future developers.",
+    "supportedCountryCodes": [],
+    "keywords": []
+}
