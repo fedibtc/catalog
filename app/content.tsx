@@ -211,6 +211,7 @@ export default function PageContent({
                         />
 
                         <MiniAppDetails
+                            key={moreDetailsApp.id}
                             miniApp={moreDetailsApp}
                             isInstalled={isMiniAppInstalled(moreDetailsApp)}
                             onCopy={() => copyMiniAppUrl(moreDetailsApp)}

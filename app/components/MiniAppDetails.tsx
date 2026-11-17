@@ -1,5 +1,5 @@
 import { Button, Icon, Text } from "@fedibtc/ui"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import QRCode from "react-qr-code"
 import { miniAppTestId } from "../../e2e/helpers/test-ids"
 import { categoriesByCode } from "../lib/categories"
@@ -24,12 +24,6 @@ const MiniAppDetails = (props: MiniAppDetails) => {
         useState<boolean>(false)
     const [showingQrCode, setShowingQrCode] = useState<boolean>(false)
     const [isInstalling, setIsInstalling] = useState<boolean>(false)
-
-    useEffect(() => {
-        setViewMoreDescription(false)
-        setShowingQrCode(false)
-        setIsInstalling(false)
-    }, [miniApp])
 
     const detailsTestId = `${miniAppTestId(miniApp.name)}-details`
 
