@@ -1,6 +1,11 @@
 ---
 name: catalog-deploy
-description: How to add or change a mod in fedibtc/catalog and how to deploy master to production. Use for any catalog PR, any "deploy the catalog" or "push the mods to prod" request, a newMods.json conflict, or a red build check whose log says M bun.lock.
+description: >-
+  How to add, change or remove a mod in fedibtc/catalog, how to review a PR opened
+  by the mini apps dashboard, and how to deploy master to production. Use for any
+  catalog PR, any "deploy the catalog" or "push the mods to prod" request, an
+  archived or removed mini app, a newMods.json conflict, or a red build check whose
+  log says M bun.lock.
 ---
 
 # Catalog PRs and deploys
@@ -15,6 +20,21 @@ Two branches. `master` is the source of truth and deploys to the Vercel `staging
 - a PR that adds a mod has its icon loaded in a browser from another origin, so a url only that mod's own site can display fails the PR. every icon is checked the same way on a weekly schedule, and a broken one opens an issue naming the mod, to fix its url or take the mod out
 - `newMods.json` is a sliding window of six ids, oldest first. drop the first entry and append the new id. sibling PRs cut from the same base all conflict on this file, so merge them in the order they were opened and merge master into the next one after each merge
 - master needs no approvals. a merge commit or a squash are both fine on master
+
+## Removing a mod
+
+- one PR into master titled `chore: remove <Name>`. delete `mods/<category>/<id>/meta.json` and say in the body why the mod goes, for example a dead link or the app was archived. #100 is the model
+- if the id is in `newMods.json`, take it out in the same PR and keep the rest in order. the window then holds five ids, and the next add appends without dropping one
+- search the repo for the id before deleting, so nothing else still points at it
+- the mod stays on the live catalog until the next production deploy
+
+## Reviewing a PR from the mini apps dashboard
+
+The Fedi Mini Apps dashboard opens a PR from a branch on this repo when an app's status changes. An add is `feat: add <Name>` from `add-mod-<id>`, with a table of the submitted fields in the body. A removal follows the section above.
+
+- the dashboard also opens a twin titled `feat: add <Name> (production)` from `add-mod-<id>-prod` into vercel/production. close it with a comment that links the master PR. the mod reaches production with the next deploy
+- compare the countries row in the body with `supportedCountryCodes`. the codes are the ISO 3166 alpha-2 codes in `app/lib/countries.ts`, such as `MW` for Malawi. an empty list files the app under Global, so it is missing when someone filters by its country or region. fill the codes in on the PR branch
+- check the icon on the Vercel preview as for any add, and merge sibling PRs in the order they were opened
 
 ## Deploying to production
 
