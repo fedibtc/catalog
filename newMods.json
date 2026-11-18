@@ -1,10 +1,10 @@
 {
   "newModIds": [
-    "saving-satoshi",
     "bitcoin-amantikir",
     "pagcoin-p2p-calculator",
     "mailstr",
     "tando-preview",
-    "bitmsika"
+    "bitmsika",
+    "bip-explorer"
   ]
 }
