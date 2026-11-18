@@ -1,8 +1,0 @@
-{
-  "name": "AI Assistant",
-  "id": "lngpt",
-  "url": "https://lngpt.vercel.app",
-  "iconUrl": "https://lngpt.vercel.app/logo.png",
-  "description": "AI chatbot you can pay in bitcoin",
-  "privacyPolicyUrl": "https://www.fedi.xyz/privacy-policy"
-}
