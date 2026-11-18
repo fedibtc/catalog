@@ -14,10 +14,10 @@ test.describe("Browser Mode - Search", () => {
 
     test("filter by description keyword", async ({ page, catalogPage }) => {
         await catalogPage.waitForCatalogReady()
-        await catalogPage.getSearchInput().fill("chatbot")
+        await catalogPage.getSearchInput().fill("video models")
         await expect(catalogPage.getFilteredResultsHeading()).toBeVisible()
         await expect(
-            page.locator("img[alt='AI Assistant']").first(),
+            page.locator("img[alt='PPQ']").first(),
         ).toBeVisible()
     })
 

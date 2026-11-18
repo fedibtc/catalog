@@ -69,9 +69,9 @@ test.describe("Fedi Mode - Install Flow", () => {
             boltzCard.getByRole("button", { name: "Added", exact: true }),
         ).toBeVisible()
 
-        const aiCard = catalogPage.getMiniAppCard("AI Assistant")
+        const ppqCard = catalogPage.getMiniAppCard("PPQ")
         await expect(
-            aiCard.getByRole("button", { name: "Add", exact: true }),
+            ppqCard.getByRole("button", { name: "Add", exact: true }),
         ).toBeVisible()
     })
 
@@ -91,10 +91,10 @@ test.describe("Fedi Mode - Install Flow", () => {
             boltzCard.getByRole("button", { name: "Added", exact: true }),
         ).toBeVisible()
 
-        const aiCard = catalogPage.getMiniAppCard("AI Assistant")
-        await aiCard.getByRole("button", { name: "Add", exact: true }).click()
+        const ppqCard = catalogPage.getMiniAppCard("PPQ")
+        await ppqCard.getByRole("button", { name: "Add", exact: true }).click()
         await expect(
-            aiCard.getByRole("button", { name: "Added", exact: true }),
+            ppqCard.getByRole("button", { name: "Added", exact: true }),
         ).toBeVisible()
 
         await expect(

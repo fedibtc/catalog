@@ -84,7 +84,7 @@ test.describe("Browser Mode - URL-based Filtering", () => {
         page,
         catalogPage,
     }) => {
-        await page.goto("/?search=bitcoin&categories=ai", {
+        await page.goto("/?search=models&categories=ai", {
             waitUntil: "domcontentloaded",
         })
         await catalogPage.waitForCatalogReady()
@@ -93,7 +93,7 @@ test.describe("Browser Mode - URL-based Filtering", () => {
         await expect(catalogPage.getFilterDescription()).toContainText(
             "Category: AI & Chatbots",
         )
-        await expect(catalogPage.getSearchInput()).toHaveValue("bitcoin")
+        await expect(catalogPage.getSearchInput()).toHaveValue("models")
     })
 
     test("filters persist across page reload", async ({
